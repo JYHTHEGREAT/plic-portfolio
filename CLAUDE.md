@@ -93,10 +93,11 @@ portfolio/
 
 ### academy (블루+코랄)
 - 배경: #FFFFFF / 보조배경: #F8FAFC
-- 주색: #2563EB / 코랄: #F97316 / 퍼플: #8B5CF6
+- 주색: #2563EB / 코랄: #C05E10 (WCAG AA) / 퍼플: #7C3AED (WCAG AA) / 그린: #059669 (WCAG AA)
 - 텍스트: #1E293B (주) / #64748B (부)
 - 폰트: Nunito (영문) + Noto Sans KR (한국어)
 - 커브: 20px (카드), 24px (CTA 필)
+- 접근성: `:focus-visible` 글로벌 포커스 스타일 (primary 2px outline), skip-to-content 링크
 
 ### pilates (로즈골드 프리미엄)
 - 배경: #FAF8F5 (웜 화이트) / 카드: #FFFFFF / 다크 섹션: #1A1612
@@ -104,14 +105,17 @@ portfolio/
 - 텍스트: #2C2420 (주) / #8C8279 (부)
 - 폰트: Cormorant Garamond (영문 헤딩) + Noto Sans KR (한국어 본문)
 - 커브: 12px (카드), 100px (CTA 필)
-- 핵심: CSS-only 시네마틱 히어로 애니메이션 (3개 씬 순환, 12-15초 루프)
+- 핵심: CSS-only 시네마틱 히어로 애니메이션 (2개 씬 크로스페이드, 14초 루프)
 
 ### dental (프리미엄 심미치과)
 - 배경: #FFFFFF / 보조: #F5F8FC
 - 주색: #1B3A5C (네이비) / 액센트: #C9A84C (골드)
-- 텍스트: #1A2332 (주) / #6B7D93 (부)
+- 액센트 텍스트: #7D6220 (WCAG AA 4.5:1+)
+- 히어로 .accent: #8A7028 (골드 on white, 4.5:1+)
+- 텍스트: #1A2332 (주) / #5E6F84 (부, WCAG AA 4.5:1+)
 - 폰트: Noto Sans KR
 - 커브: 16px (카드), 12px (버튼)
+- 접근성: `:focus-visible` 글로벌 포커스 스타일 (primary 2px outline)
 
 ## 공통 패턴
 - **스크롤 애니메이션**: IntersectionObserver + data-reveal 속성 시스템
@@ -119,6 +123,43 @@ portfolio/
 - **반응형**: 768px (태블릿), 1024px (데스크톱) 브레이크포인트
 - **모바일 메뉴**: checkbox 트릭 기반 CSS-only 토글
 - **탭 갤러리 (plicstudio)**: 업종 카테고리 탭 + 패널 내 슬라이드 + iframe 라이브 프리뷰
+
+## academy QA 적용 이력 (2026-02-24)
+- **C1**: WCAG 색상 대비 개선: --color-coral #F97316 → #C05E10, --color-purple #8B5CF6 → #7C3AED, --color-green #10B981 → #059669 (AA 4.5:1+)
+- **C2**: `*:focus-visible` 글로벌 포커스 스타일 추가 (outline: 2px solid --color-primary)
+- **R1**: 시맨틱 헤딩 계층 수정: program-card-title, why-title → `<h3>` 변환
+- **R2**: 모든 장식용 SVG에 `aria-hidden="true"` 추가
+- **R3**: max-width 미디어 쿼리 → min-width 모바일 퍼스트 전환 (8개 블록)
+- **R4**: Why Us 텍스트 대비 개선: .why-desc rgba(0.8) → rgba(0.85), .section-subtitle rgba(0.75) → rgba(0.85)
+- **R5**: skip-to-content 링크 추가 (`<a href="#main" class="skip-link">본문 바로가기</a>`)
+
+## hospital QA 적용 이력 (2026-02-24)
+- `:focus-visible` 글로벌 포커스 스타일 추가 (outline: 2px solid --color-primary)
+- stat-label 색상 대비 개선: opacity 0.85 → rgba(255,255,255,0.95) + font-weight 400 (WCAG AA 충족)
+- 진료시간 테이블 접근성: aria-label="진료시간", td→th scope="row" 변환
+- `querySelector('#')` 에러 가드 강화: !targetId 체크 추가
+- 햄버거 메뉴 label에 aria-expanded 속성 + JS change 이벤트 토글 추가
+
+## pilates QA 적용 이력 (2026-02-24)
+- `:focus-visible` 글로벌 포커스 스타일 추가 (outline: 2px solid --color-primary)
+- `--color-secondary` #8B7355 → #725B3E (WCAG AA 4.5:1 충족)
+- footer copyright opacity 0.5 → 0.65 (대비 개선)
+- video 태그에 fallback 텍스트 추가
+- video preload 속성 추가 (scene1: auto, scene2: metadata)
+- 햄버거 메뉴 label에 aria-expanded 속성 + JS 토글 추가
+- CTA 배경색 #A68A5B → `var(--color-cta)` 토큰화
+- 미사용 `lastScrollY` 변수 제거 (dead code)
+- CLAUDE.md 히어로 설명 동기화 (2개 씬 크로스페이드, 14초 루프)
+
+## dental QA 적용 이력 (2026-02-24)
+- **C1**: Hero `.accent` 색상 #C9A84C → #8A7028 (대비 2.3:1 → 4.5:1+)
+- **C2**: `--color-accent-text` #957625 → #7D6220 (대비 3.8:1 → 4.5:1+)
+- **C3**: `*:focus-visible` 글로벌 포커스 스타일 추가 (outline: 2px solid --color-primary)
+- **R1**: `--color-text-secondary` #6B7D93 → #5E6F84 (on #F5F8FC 대비 4.5:1+)
+- **R2**: footer-info opacity 0.5 → 0.6, footer-bottom opacity 0.4 → 0.55
+- **R3**: 햄버거 메뉴 label에 aria-expanded 속성 + JS change 이벤트 토글 추가
+- **R4**: hours-table `<caption class="sr-only">진료시간</caption>` + `td` → `<th scope="row">` 변환
+- **R5**: toothShine 키프레임 `left` → `translateX` (GPU 가속)
 
 ## plicstudio QA 적용 이력 (2026-02-24)
 - `:focus-visible` 글로벌 포커스 스타일 추가

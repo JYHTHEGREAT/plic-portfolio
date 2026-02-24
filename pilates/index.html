@@ -16,7 +16,7 @@
 :root {
   --color-primary: #C8A97E;
   --color-primary-dark: #B8956A;
-  --color-secondary: #8B7355;
+  --color-secondary: #725B3E;
   --color-bg: #FAF8F5;
   --color-card: #FFFFFF;
   --color-dark: #1A1612;
@@ -34,7 +34,16 @@
   --font-heading: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --font-body: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --color-cta: #A68A5B;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   Global Focus Style (Accessibility)
+   ============================================================ */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 /* ============================================================
@@ -481,7 +490,7 @@ p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
 .hero__cta {
   display: inline-block;
   padding: 16px 40px;
-  background: #A68A5B;
+  background: var(--color-cta);
   color: #FFFFFF;
   font-size: 15px;
   font-weight: 500;
@@ -1006,7 +1015,7 @@ p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
   align-items: center;
   justify-content: center;
   padding: 16px 40px;
-  background: #A68A5B;
+  background: var(--color-cta);
   color: #FFFFFF;
   font-size: 15px;
   font-weight: 500;
@@ -1154,7 +1163,7 @@ p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
 .footer__copyright {
   font-size: 0.75rem;
   color: var(--color-text-light);
-  opacity: 0.5;
+  opacity: 0.65;
 }
 </style>
 </head>
@@ -1176,7 +1185,7 @@ p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
     </div>
     <div class="nav__burger">
       <input type="checkbox" class="nav__burger-check" id="navToggle" aria-label="메뉴 열기">
-      <label class="nav__burger-label" for="navToggle">
+      <label class="nav__burger-label" for="navToggle" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
@@ -1201,14 +1210,16 @@ p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
   <div class="hero__cinema">
     <!-- Scene 1: Pilates Studio Workout -->
     <div class="hero__scene hero__scene--1">
-      <video autoplay muted loop playsinline>
+      <video autoplay muted loop playsinline preload="auto">
         <source src="scene1.mp4" type="video/mp4">
+        브라우저가 비디오를 지원하지 않습니다.
       </video>
     </div>
     <!-- Scene 2: Ballet Barre Stretching -->
     <div class="hero__scene hero__scene--2">
-      <video autoplay muted loop playsinline>
+      <video autoplay muted loop playsinline preload="metadata">
         <source src="scene2.mp4" type="video/mp4">
+        브라우저가 비디오를 지원하지 않습니다.
       </video>
     </div>
   </div>
@@ -1561,7 +1572,6 @@ p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
   var nav = document.getElementById('nav');
 
   /* ---- Navigation scroll effect ---- */
-  var lastScrollY = 0;
   var navScrolled = false;
 
   function handleNavScroll() {
@@ -1573,7 +1583,6 @@ p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
       nav.classList.remove('is-scrolled');
       navScrolled = false;
     }
-    lastScrollY = scrollY;
   }
 
   window.addEventListener('scroll', handleNavScroll, { passive: true });
@@ -1603,6 +1612,15 @@ p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
     for (var k = 0; k < fallbackEls.length; k++) {
       fallbackEls[k].classList.add('is-visible');
     }
+  }
+
+  /* ---- Mobile menu aria-expanded toggle ---- */
+  var menuToggle = document.getElementById('navToggle');
+  if (menuToggle) {
+    var menuLabel = document.querySelector('.nav__burger-label');
+    menuToggle.addEventListener('change', function() {
+      if (menuLabel) menuLabel.setAttribute('aria-expanded', this.checked);
+    });
   }
 
   /* ---- Smooth scroll for nav links (fallback for older browsers) ---- */

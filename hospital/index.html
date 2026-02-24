@@ -28,6 +28,12 @@
   --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ===== Focus Accessibility ===== */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 /* ===== Reset & Base ===== */
 *, *::before, *::after {
   margin: 0;
@@ -696,8 +702,8 @@ p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
 
 .stat-label {
   font-size: 0.875rem;
-  opacity: 0.85;
-  font-weight: 300;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 400;
 }
 
 @media (max-width: 480px) {
@@ -986,14 +992,17 @@ p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
   border-bottom: none;
 }
 
-.hours-table td {
+.hours-table td,
+.hours-table th {
   padding: 14px 0;
   font-size: 0.938rem;
 }
 
-.hours-table td:first-child {
+.hours-table td:first-child,
+.hours-table th {
   font-weight: 500;
   color: var(--color-text);
+  text-align: left;
 }
 
 .hours-table td:last-child {
@@ -1312,7 +1321,7 @@ p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
 
     <!-- Mobile menu (CSS-only toggle) -->
     <input type="checkbox" id="navToggle" class="nav-toggle" aria-label="메뉴 열기">
-    <label for="navToggle" class="hamburger" aria-hidden="true">
+    <label for="navToggle" class="hamburger" aria-label="메뉴 열기/닫기" aria-expanded="false">
       <span></span>
     </label>
     <div class="nav-mobile-menu">
@@ -1613,21 +1622,21 @@ p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           진료시간 안내
         </h3>
-        <table class="hours-table">
+        <table class="hours-table" aria-label="진료시간">
           <tr>
-            <td>평일</td>
+            <th scope="row">평일</th>
             <td>09:00 - 18:00</td>
           </tr>
           <tr>
-            <td>토요일</td>
+            <th scope="row">토요일</th>
             <td>09:00 - 13:00</td>
           </tr>
           <tr class="closed">
-            <td>일요일 / 공휴일</td>
+            <th scope="row">일요일 / 공휴일</th>
             <td>휴진</td>
           </tr>
           <tr>
-            <td>점심시간</td>
+            <th scope="row">점심시간</th>
             <td>13:00 - 14:00</td>
           </tr>
         </table>
@@ -1750,6 +1759,15 @@ p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
   window.addEventListener('scroll', handleScroll, { passive: true });
   handleScroll();
 
+  // === Hamburger aria-expanded toggle ===
+  var navToggle = document.getElementById('navToggle');
+  var hamburgerLabel = document.querySelector('.hamburger');
+  if (navToggle && hamburgerLabel) {
+    navToggle.addEventListener('change', function() {
+      hamburgerLabel.setAttribute('aria-expanded', String(this.checked));
+    });
+  }
+
   // === IntersectionObserver scroll reveal ===
   var revealElements = document.querySelectorAll('[data-reveal]');
 
@@ -1781,7 +1799,7 @@ p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
   anchorLinks.forEach(function(link) {
     link.addEventListener('click', function(e) {
       var targetId = this.getAttribute('href');
-      if (targetId === '#') return;
+      if (!targetId || targetId === '#') return;
       var target = document.querySelector(targetId);
       if (target) {
         e.preventDefault();

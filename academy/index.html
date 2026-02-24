@@ -14,9 +14,9 @@
 :root {
   --color-primary: #2563EB;
   --color-primary-dark: #1D4ED8;
-  --color-coral: #F97316;
-  --color-purple: #8B5CF6;
-  --color-green: #10B981;
+  --color-coral: #C05E10;
+  --color-purple: #7C3AED;
+  --color-green: #059669;
   --color-bg: #FFFFFF;
   --color-bg-secondary: #F8FAFC;
   --color-text: #1E293B;
@@ -54,6 +54,28 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  padding: 8px 16px;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: 4px;
+  z-index: 10000;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 16px;
 }
 
 img { max-width: 100%; display: block; }
@@ -136,12 +158,23 @@ section {
 
 .nav-links {
   display: flex;
-  align-items: center;
-  gap: 32px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100vh;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 100px 32px 40px;
+  gap: 24px;
+  background: #fff;
+  box-shadow: -4px 0 30px rgba(0,0,0,0.1);
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-links a {
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   font-weight: 500;
   color: var(--color-text-secondary);
   transition: color 0.2s;
@@ -150,6 +183,10 @@ section {
 
 .nav-links a:hover {
   color: var(--color-primary);
+}
+
+.nav-toggle:checked ~ .nav-links {
+  transform: translateX(0);
 }
 
 .btn-cta-nav {
@@ -176,7 +213,7 @@ section {
 }
 
 .hamburger {
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
@@ -205,49 +242,46 @@ section {
   transform: translateY(-7.5px) rotate(-45deg);
 }
 
-/* Mobile nav */
-@media (max-width: 767px) {
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: -1;
+}
+
+.nav-toggle:checked ~ .mobile-overlay {
+  display: block;
+}
+
+@media (min-width: 768px) {
   .hamburger {
-    display: flex;
+    display: none;
   }
 
   .nav-links {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 280px;
-    height: 100vh;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 100px 32px 40px;
-    gap: 24px;
-    background: #fff;
-    box-shadow: -4px 0 30px rgba(0,0,0,0.1);
-    transform: translateX(100%);
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .nav-toggle:checked ~ .nav-links {
-    transform: translateX(0);
+    position: static;
+    width: auto;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    gap: 32px;
+    background: none;
+    box-shadow: none;
+    transform: none;
+    transition: none;
   }
 
   .nav-links a {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
   }
 
   .mobile-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.3);
-    z-index: -1;
-  }
-
-  .nav-toggle:checked ~ .mobile-overlay {
-    display: block;
+    display: none !important;
   }
 }
 
@@ -263,13 +297,13 @@ section {
 
 .hero-inner {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 60px;
+  flex-direction: column;
+  text-align: center;
+  gap: 40px;
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 60px 20px 40px;
 }
 
 .hero-content {
@@ -298,12 +332,15 @@ section {
   line-height: 1.8;
   margin-bottom: 36px;
   max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-btns {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .btn-primary {
@@ -352,19 +389,19 @@ section {
   justify-content: center;
   align-items: center;
   position: relative;
-  min-height: 400px;
+  min-height: 320px;
 }
 
 .floating-cards {
   position: relative;
-  width: 320px;
-  height: 400px;
+  width: 260px;
+  height: 320px;
 }
 
 .floating-card {
   position: absolute;
-  width: 180px;
-  padding: 28px 24px;
+  width: 130px;
+  padding: 18px 14px;
   border-radius: var(--radius-card);
   color: #fff;
   box-shadow: var(--shadow-lg);
@@ -372,21 +409,21 @@ section {
 }
 
 .floating-card-icon {
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   background: rgba(255,255,255,0.25);
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 14px;
-  font-size: 1.4rem;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
 }
 
 .floating-card-title {
   font-family: var(--font-en);
   font-weight: 800;
-  font-size: 1.2rem;
+  font-size: 1rem;
   letter-spacing: -0.3px;
 }
 
@@ -399,17 +436,17 @@ section {
 }
 
 .fc-reading {
-  background: linear-gradient(135deg, #F97316, #FB923C);
-  top: 80px;
+  background: linear-gradient(135deg, #C05E10, #E07B30);
+  top: 70px;
   right: 0;
   transform: rotate(4deg);
   animation: float2 4.5s ease-in-out infinite;
 }
 
 .fc-writing {
-  background: linear-gradient(135deg, #8B5CF6, #A78BFA);
-  bottom: 20px;
-  left: 30px;
+  background: linear-gradient(135deg, #7C3AED, #9461F5);
+  bottom: 10px;
+  left: 20px;
   transform: rotate(-3deg);
   animation: float3 5s ease-in-out infinite;
 }
@@ -429,52 +466,52 @@ section {
   50% { transform: rotate(-3deg) translateY(-12px); }
 }
 
-@media (max-width: 767px) {
+@media (min-width: 768px) {
   .hero-inner {
-    flex-direction: column;
-    text-align: center;
-    gap: 40px;
-    padding-top: 60px;
-    padding-bottom: 40px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    gap: 60px;
+    padding: 40px 20px;
   }
 
   .hero-subtitle {
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .hero-btns {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .hero-visual {
-    min-height: 320px;
+    min-height: 400px;
   }
 
   .floating-cards {
-    width: 260px;
-    height: 320px;
+    width: 320px;
+    height: 400px;
   }
 
   .floating-card {
-    width: 130px;
-    padding: 18px 14px;
+    width: 180px;
+    padding: 28px 24px;
   }
 
   .floating-card-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 1.1rem;
-    margin-bottom: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 1.4rem;
+    margin-bottom: 14px;
   }
 
   .floating-card-title {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
-  .fc-speaking { top: 0; left: 0; }
-  .fc-reading { top: 70px; right: 0; }
-  .fc-writing { bottom: 10px; left: 20px; }
+  .fc-reading { top: 80px; }
+  .fc-writing { bottom: 20px; left: 30px; }
 }
 
 /* ===== Section Common ===== */
@@ -524,9 +561,9 @@ section {
 
 .counters {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: 24px;
-  max-width: 800px;
+  max-width: 360px;
   margin: 0 auto;
 }
 
@@ -567,10 +604,10 @@ section {
   font-weight: 500;
 }
 
-@media (max-width: 767px) {
+@media (min-width: 768px) {
   .counters {
-    grid-template-columns: 1fr;
-    max-width: 360px;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 800px;
   }
 }
 
@@ -581,14 +618,14 @@ section {
 
 .program-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 24px;
 }
 
 .program-card {
   background: #fff;
   border-radius: var(--radius-card);
-  padding: 36px 32px;
+  padding: 28px 24px;
   box-shadow: var(--shadow-sm);
   border-top: 4px solid transparent;
   transition: transform 0.3s, box-shadow 0.3s;
@@ -670,13 +707,13 @@ section {
   opacity: 0.4;
 }
 
-@media (max-width: 767px) {
+@media (min-width: 768px) {
   .program-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .program-card {
-    padding: 28px 24px;
+    padding: 36px 32px;
   }
 }
 
@@ -692,12 +729,12 @@ section {
 }
 
 .why-us .section-subtitle {
-  color: rgba(255,255,255,0.75);
+  color: rgba(255,255,255,0.85);
 }
 
 .why-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 28px;
   max-width: 900px;
   margin: 0 auto;
@@ -737,13 +774,13 @@ section {
 .why-desc {
   font-size: 0.92rem;
   line-height: 1.7;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.85);
   font-weight: 300;
 }
 
-@media (max-width: 767px) {
+@media (min-width: 768px) {
   .why-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -754,8 +791,11 @@ section {
 
 .review-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: 24px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .review-card {
@@ -807,12 +847,12 @@ section {
   color: var(--color-text);
 }
 
-@media (max-width: 767px) {
+@media (min-width: 768px) {
   .review-grid {
-    grid-template-columns: 1fr;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 
@@ -823,8 +863,8 @@ section {
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  grid-template-columns: 1fr;
+  gap: 36px;
   align-items: start;
 }
 
@@ -896,7 +936,7 @@ section {
   box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
   border: none;
   cursor: pointer;
-  align-self: flex-start;
+  align-self: stretch;
 }
 
 .btn-submit:hover {
@@ -954,14 +994,14 @@ section {
   margin-top: 2px;
 }
 
-@media (max-width: 767px) {
+@media (min-width: 768px) {
   .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 36px;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
   }
 
   .btn-submit {
-    align-self: stretch;
+    align-self: flex-start;
   }
 }
 
@@ -974,8 +1014,8 @@ section {
 
 .footer-inner {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
-  gap: 48px;
+  grid-template-columns: 1fr;
+  gap: 32px;
   margin-bottom: 48px;
 }
 
@@ -1049,10 +1089,10 @@ section {
   color: rgba(255,255,255,0.45);
 }
 
-@media (max-width: 767px) {
+@media (min-width: 768px) {
   .footer-inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 48px;
   }
 }
 
@@ -1069,6 +1109,8 @@ section {
 </style>
 </head>
 <body>
+
+<a href="#main" class="skip-link">본문 바로가기</a>
 
 <!-- ===== Navigation ===== -->
 <nav class="nav" id="nav">
@@ -1094,7 +1136,7 @@ section {
   </div>
 </nav>
 
-<main>
+<main id="main">
 
 <!-- ===== Hero ===== -->
 <section class="hero" id="hero">
@@ -1111,7 +1153,7 @@ section {
       <div class="floating-cards">
         <div class="floating-card fc-speaking">
           <div class="floating-card-icon">
-            <svg class="icon-svg" viewBox="0 0 24 24" stroke="#fff">
+            <svg class="icon-svg" viewBox="0 0 24 24" stroke="#fff" aria-hidden="true">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
             </svg>
           </div>
@@ -1119,7 +1161,7 @@ section {
         </div>
         <div class="floating-card fc-reading">
           <div class="floating-card-icon">
-            <svg class="icon-svg" viewBox="0 0 24 24" stroke="#fff">
+            <svg class="icon-svg" viewBox="0 0 24 24" stroke="#fff" aria-hidden="true">
               <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
               <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
             </svg>
@@ -1128,7 +1170,7 @@ section {
         </div>
         <div class="floating-card fc-writing">
           <div class="floating-card-icon">
-            <svg class="icon-svg" viewBox="0 0 24 24" stroke="#fff">
+            <svg class="icon-svg" viewBox="0 0 24 24" stroke="#fff" aria-hidden="true">
               <path d="M12 20h9"/>
               <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
             </svg>
@@ -1172,7 +1214,7 @@ section {
     <p class="section-subtitle" data-reveal data-reveal-delay="1">학년과 수준에 맞는 체계적인 커리큘럼</p>
     <div class="program-grid">
       <div class="program-card border-blue" data-reveal data-reveal-delay="1">
-        <div class="program-card-title">초등 영어</div>
+        <h3 class="program-card-title">초등 영어</h3>
         <div class="program-card-en">Elementary</div>
         <p class="program-card-desc">파닉스부터 리딩까지, 영어의 기초를 탄탄하게</p>
         <div class="program-tags">
@@ -1183,7 +1225,7 @@ section {
         <div class="program-target">초등 1~6학년</div>
       </div>
       <div class="program-card border-coral" data-reveal data-reveal-delay="2">
-        <div class="program-card-title">중등 영어</div>
+        <h3 class="program-card-title">중등 영어</h3>
         <div class="program-card-en">Middle School</div>
         <p class="program-card-desc">내신과 실력을 동시에 잡는 체계적 학습</p>
         <div class="program-tags">
@@ -1194,7 +1236,7 @@ section {
         <div class="program-target">중등 1~3학년</div>
       </div>
       <div class="program-card border-purple" data-reveal data-reveal-delay="3">
-        <div class="program-card-title">고등·수능 영어</div>
+        <h3 class="program-card-title">고등·수능 영어</h3>
         <div class="program-card-en">High School / CSAT</div>
         <p class="program-card-desc">수능 1등급을 위한 전략적 영어 학습</p>
         <div class="program-tags">
@@ -1205,7 +1247,7 @@ section {
         <div class="program-target">고등 1~3학년</div>
       </div>
       <div class="program-card border-green" data-reveal data-reveal-delay="4">
-        <div class="program-card-title">성인 회화</div>
+        <h3 class="program-card-title">성인 회화</h3>
         <div class="program-card-en">Adult Conversation</div>
         <p class="program-card-desc">비즈니스 영어부터 일상 회화까지</p>
         <div class="program-tags">
@@ -1227,44 +1269,44 @@ section {
     <div class="why-grid">
       <div class="why-item" data-reveal data-reveal-delay="1">
         <div class="why-icon">
-          <svg class="icon-svg" viewBox="0 0 24 24" stroke="#fff">
+          <svg class="icon-svg" viewBox="0 0 24 24" stroke="#fff" aria-hidden="true">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
             <circle cx="9" cy="7" r="4"/>
             <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
             <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
           </svg>
         </div>
-        <div class="why-title">원어민 협동 수업</div>
+        <h3 class="why-title">원어민 협동 수업</h3>
         <p class="why-desc">한국인 강사와 원어민 강사의 팀티칭으로 정확성과 유창성을 동시에</p>
       </div>
       <div class="why-item" data-reveal data-reveal-delay="2">
         <div class="why-icon">
-          <svg class="icon-svg" viewBox="0 0 24 24" stroke="#fff">
+          <svg class="icon-svg" viewBox="0 0 24 24" stroke="#fff" aria-hidden="true">
             <circle cx="12" cy="12" r="10"/>
             <circle cx="12" cy="12" r="6"/>
             <circle cx="12" cy="12" r="2"/>
           </svg>
         </div>
-        <div class="why-title">소수정예 8인반</div>
+        <h3 class="why-title">소수정예 8인반</h3>
         <p class="why-desc">학생 한 명 한 명에게 집중하는 밀착 관리</p>
       </div>
       <div class="why-item" data-reveal data-reveal-delay="3">
         <div class="why-icon">
-          <svg class="icon-svg" viewBox="0 0 24 24" stroke="#fff">
+          <svg class="icon-svg" viewBox="0 0 24 24" stroke="#fff" aria-hidden="true">
             <circle cx="12" cy="12" r="10"/>
             <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
           </svg>
         </div>
-        <div class="why-title">맞춤 커리큘럼</div>
+        <h3 class="why-title">맞춤 커리큘럼</h3>
         <p class="why-desc">레벨테스트 기반 개인별 학습 로드맵 설계</p>
       </div>
       <div class="why-item" data-reveal data-reveal-delay="4">
         <div class="why-icon">
-          <svg class="icon-svg" viewBox="0 0 24 24" stroke="#fff">
+          <svg class="icon-svg" viewBox="0 0 24 24" stroke="#fff" aria-hidden="true">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
           </svg>
         </div>
-        <div class="why-title">학부모 소통</div>
+        <h3 class="why-title">학부모 소통</h3>
         <p class="why-desc">월간 리포트와 정기 상담으로 투명한 학습 현황 공유</p>
       </div>
     </div>
@@ -1334,7 +1376,7 @@ section {
       <div class="contact-info" data-reveal data-reveal-delay="2">
         <div class="contact-info-card">
           <div class="contact-info-icon">
-            <svg class="icon-svg" viewBox="0 0 24 24" stroke="var(--color-primary)">
+            <svg class="icon-svg" viewBox="0 0 24 24" stroke="var(--color-primary)" aria-hidden="true">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
             </svg>
           </div>
@@ -1346,7 +1388,7 @@ section {
 
         <div class="contact-info-card">
           <div class="contact-info-icon">
-            <svg class="icon-svg" viewBox="0 0 24 24" stroke="var(--color-primary)">
+            <svg class="icon-svg" viewBox="0 0 24 24" stroke="var(--color-primary)" aria-hidden="true">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
               <circle cx="12" cy="10" r="3"/>
             </svg>
@@ -1360,7 +1402,7 @@ section {
 
         <div class="contact-info-card">
           <div class="contact-info-icon">
-            <svg class="icon-svg" viewBox="0 0 24 24" stroke="var(--color-primary)">
+            <svg class="icon-svg" viewBox="0 0 24 24" stroke="var(--color-primary)" aria-hidden="true">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
             </svg>
           </div>
@@ -1372,7 +1414,7 @@ section {
 
         <div class="contact-info-card">
           <div class="contact-info-icon">
-            <svg class="icon-svg" viewBox="0 0 24 24" stroke="var(--color-primary)">
+            <svg class="icon-svg" viewBox="0 0 24 24" stroke="var(--color-primary)" aria-hidden="true">
               <circle cx="12" cy="12" r="10"/>
               <polyline points="12 6 12 12 16 14"/>
             </svg>
