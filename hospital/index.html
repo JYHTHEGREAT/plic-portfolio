@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>연세숲의원 — 자연이 치유하는 프리미엄 내과·가정의학과</title>
+<meta name="description" content="연세숲의원은 숲처럼 편안한 공간에서 환자 한 분 한 분에게 맞춤 진료를 제공합니다. 내과, 가정의학과, 건강검진, 예방접종.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===== Design Tokens ===== */
+:root {
+  --color-primary: #2D6A4F;
+  --color-secondary: #40916C;
+  --color-accent-1: #74C69D;
+  --color-accent-2: #D8F3DC;
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F0FFF4;
+  --color-text: #1A1A2E;
+  --color-text-secondary: #6B7280;
+  --color-footer-bg: #1A1A2E;
+  --radius-card: 16px;
+  --radius-btn: 12px;
+  --font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --max-width: 1200px;
+  --nav-height: 72px;
+  --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Reset & Base ===== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.7;
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ===== Typography ===== */
+h1 { font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 700; line-height: 1.25; }
+h2 { font-size: clamp(1.625rem, 3.5vw, 2.25rem); font-weight: 700; line-height: 1.3; }
+h3 { font-size: clamp(1.125rem, 2vw, 1.375rem); font-weight: 700; line-height: 1.4; }
+p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
+
+/* ===== Utility ===== */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: 100px 0;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.section-header h2 {
+  color: var(--color-text);
+  margin-bottom: 12px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-header .leaf-deco {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.section-header .leaf-deco svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--color-accent-1);
+}
+
+.section-header .leaf-deco span {
+  width: 40px;
+  height: 2px;
+  background: var(--color-accent-1);
+  border-radius: 1px;
+}
+
+.section-header p {
+  color: var(--color-text-secondary);
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ===== Scroll Reveal ===== */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s var(--transition-base), transform 0.7s var(--transition-base);
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* stagger children */
+[data-reveal-stagger] > [data-reveal] {
+  transition-delay: calc(var(--reveal-i, 0) * 0.1s);
+}
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: var(--radius-btn);
+  font-size: 0.975rem;
+  font-weight: 500;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #245840;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(45, 106, 79, 0.3);
+}
+
+.btn-outline {
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background: var(--color-accent-2);
+  transform: translateY(-2px);
+}
+
+.btn-sm {
+  padding: 10px 24px;
+  font-size: 0.875rem;
+}
+
+/* ===== Navigation ===== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--nav-height);
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: all var(--transition-base);
+}
+
+.nav.scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(45, 106, 79, 0.08);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  z-index: 1001;
+}
+
+.nav-logo svg {
+  width: 28px;
+  height: 28px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav-links a {
+  font-size: 0.938rem;
+  font-weight: 400;
+  color: var(--color-text);
+  position: relative;
+  transition: color var(--transition-base);
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: 1px;
+  transition: width var(--transition-base);
+}
+
+.nav-links a:hover {
+  color: var(--color-primary);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-cta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Hamburger (CSS-only) */
+.nav-toggle {
+  display: none;
+}
+
+.hamburger {
+  display: none;
+  width: 24px;
+  height: 20px;
+  position: relative;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.hamburger span,
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: all var(--transition-base);
+}
+
+.hamburger::before { top: 0; }
+.hamburger span { top: 9px; }
+.hamburger::after { bottom: 0; }
+
+.nav-toggle:checked ~ .hamburger::before {
+  transform: rotate(45deg);
+  top: 9px;
+}
+
+.nav-toggle:checked ~ .hamburger span {
+  opacity: 0;
+}
+
+.nav-toggle:checked ~ .hamburger::after {
+  transform: rotate(-45deg);
+  bottom: 9px;
+}
+
+.nav-toggle:checked ~ .nav-mobile-menu {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-mobile-menu {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .nav-links, .nav-cta {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .nav-mobile-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s var(--transition-base);
+    z-index: 999;
+  }
+
+  .nav-mobile-menu a {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-text);
+    transition: color var(--transition-base);
+  }
+
+  .nav-mobile-menu a:hover {
+    color: var(--color-primary);
+  }
+
+  .nav-mobile-menu .btn {
+    margin-top: 8px;
+  }
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--color-bg);
+  padding-top: var(--nav-height);
+}
+
+/* Bokeh background */
+.hero-bokeh {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bokeh-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.35;
+  will-change: transform;
+}
+
+.bokeh-circle:nth-child(1) {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(116, 198, 157, 0.6), transparent 70%);
+  top: 10%;
+  right: -5%;
+  animation: bokehFloat1 18s ease-in-out infinite;
+}
+
+.bokeh-circle:nth-child(2) {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(45, 106, 79, 0.4), transparent 70%);
+  bottom: 15%;
+  left: -8%;
+  animation: bokehFloat2 22s ease-in-out infinite;
+}
+
+.bokeh-circle:nth-child(3) {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(216, 243, 220, 0.7), transparent 70%);
+  top: 50%;
+  left: 50%;
+  animation: bokehFloat3 15s ease-in-out infinite;
+}
+
+.bokeh-circle:nth-child(4) {
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(64, 145, 108, 0.35), transparent 70%);
+  top: 20%;
+  left: 20%;
+  animation: bokehFloat4 20s ease-in-out infinite;
+}
+
+.bokeh-circle:nth-child(5) {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(116, 198, 157, 0.3), transparent 70%);
+  bottom: -5%;
+  right: 20%;
+  animation: bokehFloat5 25s ease-in-out infinite;
+}
+
+@keyframes bokehFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-30px, 40px) scale(1.1); }
+  66% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+@keyframes bokehFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 30px) scale(1.1); }
+}
+
+@keyframes bokehFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-50px, 30px) scale(1.15); }
+}
+
+@keyframes bokehFloat4 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(25px, 35px); }
+  66% { transform: translate(-15px, -25px); }
+}
+
+@keyframes bokehFloat5 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40% { transform: translate(30px, -40px) scale(1.08); }
+  70% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+}
+
+.hero h1 {
+  margin-bottom: 24px;
+}
+
+.hero h1 .green {
+  color: var(--color-primary);
+  display: block;
+}
+
+.hero h1 .dark {
+  color: var(--color-text);
+  display: block;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.188rem);
+  color: var(--color-text-secondary);
+  margin-bottom: 40px;
+  max-width: 520px;
+  font-weight: 300;
+  line-height: 1.8;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* leaf floating decoration in hero */
+.hero-leaf {
+  position: absolute;
+  z-index: 0;
+  opacity: 0.08;
+  will-change: transform;
+}
+
+.hero-leaf svg {
+  fill: var(--color-primary);
+}
+
+.hero-leaf:nth-child(1) {
+  top: 18%;
+  right: 8%;
+  animation: leafFloat 12s ease-in-out infinite;
+}
+
+.hero-leaf:nth-child(2) {
+  bottom: 20%;
+  right: 15%;
+  animation: leafFloat 16s ease-in-out infinite reverse;
+}
+
+.hero-leaf:nth-child(3) {
+  top: 35%;
+  right: 30%;
+  animation: leafFloat 14s ease-in-out infinite 2s;
+}
+
+@keyframes leafFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+/* ===== About Section ===== */
+.about {
+  background: var(--color-bg-alt);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+}
+
+.about-text h3 {
+  color: var(--color-primary);
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  margin-bottom: 20px;
+}
+
+.about-text p {
+  color: var(--color-text-secondary);
+  margin-bottom: 32px;
+  line-height: 1.85;
+}
+
+.about-features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.about-feature {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  background: var(--color-bg);
+  border-radius: var(--radius-btn);
+  transition: all var(--transition-base);
+}
+
+.about-feature:hover {
+  transform: translateX(6px);
+  box-shadow: 0 4px 16px rgba(45, 106, 79, 0.08);
+}
+
+.about-feature-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--color-accent-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.about-feature-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--color-primary);
+}
+
+.about-feature span {
+  font-weight: 500;
+  font-size: 0.975rem;
+  color: var(--color-text);
+}
+
+/* Stats card */
+.about-stats-card {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  border-radius: var(--radius-card);
+  padding: 48px 40px;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+
+.about-stats-card::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
+  border-radius: 50%;
+}
+
+.about-stats-card::after {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  left: -30px;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 70%);
+  border-radius: 50%;
+}
+
+/* Leaf pattern overlay */
+.stats-leaf-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.stats-leaf-pattern svg {
+  position: absolute;
+  fill: #fff;
+}
+
+.stats-leaf-pattern svg:nth-child(1) { top: 10%; right: 10%; width: 60px; transform: rotate(30deg); }
+.stats-leaf-pattern svg:nth-child(2) { bottom: 15%; left: 15%; width: 45px; transform: rotate(-20deg); }
+.stats-leaf-pattern svg:nth-child(3) { top: 50%; right: 35%; width: 35px; transform: rotate(60deg); }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.stat-suffix { font-size: 0.6em; }
+
+.stat-label {
+  font-size: 0.875rem;
+  opacity: 0.85;
+  font-weight: 300;
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .stat-number { font-size: 2rem; }
+}
+
+/* ===== Departments ===== */
+.departments {
+  background: var(--color-bg);
+}
+
+.dept-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .dept-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .dept-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.dept-card {
+  background: var(--color-bg);
+  border: 1px solid #E8F5E9;
+  border-radius: var(--radius-card);
+  padding: 32px 28px;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.dept-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 0;
+  background: linear-gradient(180deg, var(--color-primary), var(--color-accent-1));
+  border-radius: 0 2px 2px 0;
+  transition: height 0.4s var(--transition-base);
+}
+
+.dept-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(45, 106, 79, 0.1);
+  border-color: var(--color-accent-1);
+}
+
+.dept-card:hover::before {
+  height: 100%;
+}
+
+.dept-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--color-accent-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: all var(--transition-base);
+}
+
+.dept-card:hover .dept-icon {
+  background: var(--color-primary);
+}
+
+.dept-icon svg {
+  width: 26px;
+  height: 26px;
+  stroke: var(--color-primary);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke var(--transition-base);
+}
+
+.dept-card:hover .dept-icon svg {
+  stroke: #fff;
+}
+
+.dept-card h3 {
+  margin-bottom: 10px;
+  color: var(--color-text);
+}
+
+.dept-card p {
+  color: var(--color-text-secondary);
+  font-size: 0.925rem;
+  line-height: 1.7;
+}
+
+/* ===== Doctors ===== */
+.doctors {
+  background: var(--color-bg-alt);
+}
+
+.doctor-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .doctor-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .doctor-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.doctor-card {
+  background: var(--color-bg);
+  border-radius: var(--radius-card);
+  padding: 40px 32px;
+  text-align: center;
+  transition: all var(--transition-base);
+  border: 1px solid transparent;
+}
+
+.doctor-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(45, 106, 79, 0.1);
+  border-color: var(--color-accent-2);
+}
+
+.doctor-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  position: relative;
+}
+
+.doctor-avatar::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--color-accent-2);
+}
+
+.doctor-card:nth-child(1) .doctor-avatar {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+}
+
+.doctor-card:nth-child(2) .doctor-avatar {
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-accent-1));
+}
+
+.doctor-card:nth-child(3) .doctor-avatar {
+  background: linear-gradient(135deg, #1B7A5A, #2D9B73);
+}
+
+.doctor-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.doctor-role {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-primary);
+  margin-bottom: 20px;
+}
+
+.doctor-info {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.doctor-info li {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  padding: 6px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+}
+
+.doctor-info li::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-accent-1);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+.doctor-specialty {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.doctor-specialty span {
+  font-size: 0.813rem;
+  padding: 5px 14px;
+  background: var(--color-accent-2);
+  color: var(--color-primary);
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+/* ===== Location ===== */
+.location {
+  background: var(--color-bg);
+}
+
+.location-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 768px) {
+  .location-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+}
+
+.hours-card {
+  background: var(--color-bg);
+  border-radius: var(--radius-card);
+  padding: 36px 32px;
+  border: 1px solid #E8F5E9;
+}
+
+.hours-card h3 {
+  color: var(--color-text);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hours-card h3 svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--color-primary);
+  fill: none;
+  stroke-width: 2;
+}
+
+.hours-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.hours-table tr {
+  border-bottom: 1px solid #F0F0F0;
+}
+
+.hours-table tr:last-child {
+  border-bottom: none;
+}
+
+.hours-table td {
+  padding: 14px 0;
+  font-size: 0.938rem;
+}
+
+.hours-table td:first-child {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.hours-table td:last-child {
+  text-align: right;
+  color: var(--color-text-secondary);
+}
+
+.hours-table tr.closed td:last-child {
+  color: #E74C3C;
+  font-weight: 500;
+}
+
+.hours-phone {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #E8F5E9;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hours-phone-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--color-accent-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hours-phone-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--color-primary);
+  fill: none;
+  stroke-width: 2;
+}
+
+.hours-phone-text {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.hours-phone-number {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* Map placeholder */
+.map-card {
+  background: linear-gradient(135deg, #F0FFF4 0%, #E8F5E9 100%);
+  border-radius: var(--radius-card);
+  padding: 40px 32px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 320px;
+}
+
+.map-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(45, 106, 79, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45, 106, 79, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+
+.map-pin {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.map-pin-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(45, 106, 79, 0.25);
+}
+
+.map-pin-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #fff;
+  fill: none;
+  stroke-width: 2;
+}
+
+.map-address {
+  font-size: 0.975rem;
+  font-weight: 500;
+  color: var(--color-text);
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+.map-direction {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.map-visual {
+  position: relative;
+  z-index: 1;
+  background: var(--color-bg);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(45, 106, 79, 0.1);
+}
+
+.map-visual svg {
+  width: 36px;
+  height: 36px;
+  stroke: var(--color-accent-1);
+  fill: none;
+  stroke-width: 1.5;
+  flex-shrink: 0;
+}
+
+.map-visual-text {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.map-visual-text strong {
+  display: block;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 0.938rem;
+  margin-bottom: 2px;
+}
+
+/* ===== Footer ===== */
+.footer {
+  background: var(--color-footer-bg);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 64px 0 32px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 48px;
+  }
+}
+
+.footer-brand .nav-logo {
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.footer-brand .nav-logo svg {
+  fill: var(--color-accent-1);
+}
+
+.footer-brand p {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  opacity: 0.7;
+  max-width: 300px;
+}
+
+.footer h4 {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.footer-contact li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.footer-contact li svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--color-accent-1);
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.footer-biz li {
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  opacity: 0.6;
+  line-height: 1.5;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 24px;
+  text-align: center;
+  font-size: 0.813rem;
+  opacity: 0.5;
+}
+
+/* ===== Responsive Fine-tuning ===== */
+@media (max-width: 767px) {
+  .section {
+    padding: 72px 0;
+  }
+
+  .section-header {
+    margin-bottom: 40px;
+  }
+
+  .hero-content {
+    padding: 40px 0;
+  }
+
+  .about-stats-card {
+    padding: 36px 24px;
+  }
+
+  .stats-grid {
+    gap: 20px;
+  }
+
+  .stat-number {
+    font-size: 1.75rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+  }
+
+  .doctor-card {
+    padding: 32px 24px;
+  }
+
+  .hours-card, .map-card {
+    padding: 28px 24px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Navigation ===== -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="연세숲의원 홈">
+      <svg viewBox="0 0 32 32" fill="var(--color-primary)" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 2C16 2 6 10 6 18a10 10 0 0020 0C26 10 16 2 16 2z" opacity="0.2"/>
+        <path d="M16 4C16 4 9 11 9 17.5a7 7 0 0014 0C23 11 16 4 16 4z" opacity="0.4"/>
+        <path d="M16 8C16 8 12 13 12 17a4 4 0 008 0c0-4-4-9-4-9z"/>
+        <line x1="16" y1="14" x2="16" y2="26" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M16 18c-2-2-4-1.5-5-1" stroke="#fff" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M16 21c2-2 4-1.5 4.5-1" stroke="#fff" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span>연세숲의원</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#about">소개</a>
+      <a href="#departments">진료과목</a>
+      <a href="#doctors">의료진</a>
+      <a href="#location">오시는 길</a>
+    </div>
+
+    <div class="nav-cta">
+      <a href="#location" class="btn btn-primary btn-sm">진료예약</a>
+    </div>
+
+    <!-- Mobile menu (CSS-only toggle) -->
+    <input type="checkbox" id="navToggle" class="nav-toggle" aria-label="메뉴 열기">
+    <label for="navToggle" class="hamburger" aria-hidden="true">
+      <span></span>
+    </label>
+    <div class="nav-mobile-menu">
+      <a href="#about" onclick="document.getElementById('navToggle').checked=false">소개</a>
+      <a href="#departments" onclick="document.getElementById('navToggle').checked=false">진료과목</a>
+      <a href="#doctors" onclick="document.getElementById('navToggle').checked=false">의료진</a>
+      <a href="#location" onclick="document.getElementById('navToggle').checked=false">오시는 길</a>
+      <a href="#location" class="btn btn-primary" onclick="document.getElementById('navToggle').checked=false">진료예약</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bokeh">
+    <div class="bokeh-circle"></div>
+    <div class="bokeh-circle"></div>
+    <div class="bokeh-circle"></div>
+    <div class="bokeh-circle"></div>
+    <div class="bokeh-circle"></div>
+  </div>
+
+  <!-- Floating leaf decorations -->
+  <div class="hero-leaf" aria-hidden="true">
+    <svg width="80" height="80" viewBox="0 0 32 32"><path d="M16 2C16 2 6 10 6 18a10 10 0 0020 0C26 10 16 2 16 2z"/></svg>
+  </div>
+  <div class="hero-leaf" aria-hidden="true">
+    <svg width="56" height="56" viewBox="0 0 32 32"><path d="M16 2C16 2 6 10 6 18a10 10 0 0020 0C26 10 16 2 16 2z"/></svg>
+  </div>
+  <div class="hero-leaf" aria-hidden="true">
+    <svg width="40" height="40" viewBox="0 0 32 32"><path d="M16 2C16 2 6 10 6 18a10 10 0 0020 0C26 10 16 2 16 2z"/></svg>
+  </div>
+
+  <div class="container">
+    <div class="hero-content" data-reveal>
+      <h1>
+        <span class="green">자연이 치유하는</span>
+        <span class="dark">프리미엄 내과·가정의학과</span>
+      </h1>
+      <p class="hero-subtitle">
+        숲처럼 편안한 공간에서 환자 한 분 한 분에게<br>
+        맞춤 진료를 제공합니다.
+      </p>
+      <div class="hero-btns">
+        <a href="#location" class="btn btn-primary">진료예약</a>
+        <a href="#location" class="btn btn-outline">진료시간 안내</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== About ===== -->
+<section class="section about" id="about">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="leaf-deco">
+        <span></span>
+        <svg viewBox="0 0 32 32"><path d="M16 2C16 2 6 10 6 18a10 10 0 0020 0C26 10 16 2 16 2z"/></svg>
+        <span></span>
+      </div>
+      <h2>연세숲의원을 소개합니다</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text" data-reveal>
+        <h3>환자 중심의 따뜻한 진료</h3>
+        <p>
+          연세숲의원은 환자와의 충분한 소통을 최우선으로 생각합니다.
+          최신 의학 근거에 기반한 정확한 진단과 개인 맞춤형 치료 계획을 통해
+          환자분들의 건강한 삶을 지원합니다.
+        </p>
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="about-feature-icon">
+              <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM22 11h-6M19 8v6" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span>1:1 맞춤 상담</span>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span>근거 중심 의학</span>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span>통합 건강관리</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-stats-card" data-reveal>
+        <div class="stats-leaf-pattern" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><path d="M16 2C16 2 6 10 6 18a10 10 0 0020 0C26 10 16 2 16 2z"/></svg>
+          <svg viewBox="0 0 32 32"><path d="M16 2C16 2 6 10 6 18a10 10 0 0020 0C26 10 16 2 16 2z"/></svg>
+          <svg viewBox="0 0 32 32"><path d="M16 2C16 2 6 10 6 18a10 10 0 0020 0C26 10 16 2 16 2z"/></svg>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number">15<span class="stat-suffix">+</span></div>
+            <div class="stat-label">진료 경력 (년)</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">30,000<span class="stat-suffix">+</span></div>
+            <div class="stat-label">누적 환자 수</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">98<span class="stat-suffix">%</span></div>
+            <div class="stat-label">환자 만족도</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Departments ===== -->
+<section class="section departments" id="departments">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="leaf-deco">
+        <span></span>
+        <svg viewBox="0 0 32 32"><path d="M16 2C16 2 6 10 6 18a10 10 0 0020 0C26 10 16 2 16 2z"/></svg>
+        <span></span>
+      </div>
+      <h2>진료과목 안내</h2>
+      <p>정확한 진단과 세심한 치료로 건강한 일상을 되찾아 드립니다</p>
+    </div>
+
+    <div class="dept-grid" data-reveal-stagger>
+      <!-- 내과 -->
+      <div class="dept-card" data-reveal style="--reveal-i:0">
+        <div class="dept-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+            <line x1="4" y1="22" x2="4" y2="15"/>
+            <circle cx="16" cy="9" r="3" stroke-width="1.5"/>
+            <path d="M16 7.5v3M14.5 9h3" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h3>내과</h3>
+        <p>감기, 고혈압, 당뇨 등 성인 질환의 체계적 관리</p>
+      </div>
+
+      <!-- 가정의학과 -->
+      <div class="dept-card" data-reveal style="--reveal-i:1">
+        <div class="dept-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <h3>가정의학과</h3>
+        <p>가족 구성원 모두의 건강을 책임지는 주치의 진료</p>
+      </div>
+
+      <!-- 건강검진 -->
+      <div class="dept-card" data-reveal style="--reveal-i:2">
+        <div class="dept-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+            <path d="M9 14l2 2 4-4"/>
+          </svg>
+        </div>
+        <h3>건강검진</h3>
+        <p>기본 검진부터 프리미엄 종합검진까지</p>
+      </div>
+
+      <!-- 예방접종 -->
+      <div class="dept-card" data-reveal style="--reveal-i:3">
+        <div class="dept-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M18 2l4 4M22 2l-4 4"/>
+            <path d="M12 12L7.5 16.5"/>
+            <path d="M16 8l-8 8-4 2 2-4 8-8z"/>
+            <path d="M7 17l-3 3"/>
+          </svg>
+        </div>
+        <h3>예방접종</h3>
+        <p>독감, 폐렴구균, 대상포진 등 성인 예방접종</p>
+      </div>
+
+      <!-- 소화기내과 -->
+      <div class="dept-card" data-reveal style="--reveal-i:4">
+        <div class="dept-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2C8 2 6 5 6 8c0 3 1 4 1 6s-1 4-1 6c0 1.5 1.5 2 3 2s3-1 3-3"/>
+            <path d="M12 2c4 0 6 3 6 6 0 3-1 4-1 6s1 4 1 6c0 1.5-1.5 2-3 2"/>
+            <path d="M9 10c2 1 4 1 6 0"/>
+          </svg>
+        </div>
+        <h3>소화기내과</h3>
+        <p>위내시경, 역류성 식도염, 과민성 장증후군 진료</p>
+      </div>
+
+      <!-- 영양상담 -->
+      <div class="dept-card" data-reveal style="--reveal-i:5">
+        <div class="dept-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2a7 7 0 00-7 7c0 5 7 11 7 11s7-6 7-11a7 7 0 00-7-7z" stroke-width="0" fill="none"/>
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+          </svg>
+        </div>
+        <h3>영양상담</h3>
+        <p>개인별 건강 상태에 맞는 영양 프로그램 설계</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Doctors ===== -->
+<section class="section doctors" id="doctors">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="leaf-deco">
+        <span></span>
+        <svg viewBox="0 0 32 32"><path d="M16 2C16 2 6 10 6 18a10 10 0 0020 0C26 10 16 2 16 2z"/></svg>
+        <span></span>
+      </div>
+      <h2>의료진 소개</h2>
+      <p>풍부한 임상 경험의 전문 의료진이 함께합니다</p>
+    </div>
+
+    <div class="doctor-grid" data-reveal-stagger>
+      <!-- Doctor 1 -->
+      <div class="doctor-card" data-reveal style="--reveal-i:0">
+        <div class="doctor-avatar" aria-label="박민수 원장">박</div>
+        <div class="doctor-name">박민수</div>
+        <div class="doctor-role">대표원장</div>
+        <ul class="doctor-info">
+          <li>연세대학교 의과대학 졸업</li>
+          <li>서울아산병원 내과 전공의</li>
+          <li>대한내과학회 정회원</li>
+        </ul>
+        <div class="doctor-specialty">
+          <span>내과</span>
+          <span>건강검진</span>
+        </div>
+      </div>
+
+      <!-- Doctor 2 -->
+      <div class="doctor-card" data-reveal style="--reveal-i:1">
+        <div class="doctor-avatar" aria-label="김서연 부원장">김</div>
+        <div class="doctor-name">김서연</div>
+        <div class="doctor-role">부원장</div>
+        <ul class="doctor-info">
+          <li>고려대학교 의과대학 졸업</li>
+          <li>삼성서울병원 가정의학과 전공의</li>
+          <li>대한가정의학회 정회원</li>
+        </ul>
+        <div class="doctor-specialty">
+          <span>가정의학과</span>
+          <span>영양상담</span>
+        </div>
+      </div>
+
+      <!-- Doctor 3 -->
+      <div class="doctor-card" data-reveal style="--reveal-i:2">
+        <div class="doctor-avatar" aria-label="이준호 전문의">이</div>
+        <div class="doctor-name">이준호</div>
+        <div class="doctor-role">전문의</div>
+        <ul class="doctor-info">
+          <li>성균관대학교 의과대학 졸업</li>
+          <li>세브란스병원 소화기내과 전임의</li>
+          <li>대한소화기학회 정회원</li>
+        </ul>
+        <div class="doctor-specialty">
+          <span>소화기내과</span>
+          <span>내시경</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Location ===== -->
+<section class="section location" id="location">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="leaf-deco">
+        <span></span>
+        <svg viewBox="0 0 32 32"><path d="M16 2C16 2 6 10 6 18a10 10 0 0020 0C26 10 16 2 16 2z"/></svg>
+        <span></span>
+      </div>
+      <h2>오시는 길</h2>
+    </div>
+
+    <div class="location-grid">
+      <!-- Hours -->
+      <div class="hours-card" data-reveal>
+        <h3>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          진료시간 안내
+        </h3>
+        <table class="hours-table">
+          <tr>
+            <td>평일</td>
+            <td>09:00 - 18:00</td>
+          </tr>
+          <tr>
+            <td>토요일</td>
+            <td>09:00 - 13:00</td>
+          </tr>
+          <tr class="closed">
+            <td>일요일 / 공휴일</td>
+            <td>휴진</td>
+          </tr>
+          <tr>
+            <td>점심시간</td>
+            <td>13:00 - 14:00</td>
+          </tr>
+        </table>
+        <div class="hours-phone">
+          <div class="hours-phone-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="hours-phone-text">전화 예약</div>
+            <div class="hours-phone-number">02-555-1234</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div class="map-card" data-reveal>
+        <div class="map-pin">
+          <div class="map-pin-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="map-address">서울특별시 강남구 테헤란로 152<br>강남파이낸스센터 3층</div>
+            <div class="map-direction">강남역 3번 출구에서 도보 5분</div>
+          </div>
+        </div>
+        <div class="map-visual">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          <div class="map-visual-text">
+            <strong>교통 안내</strong>
+            지하철 2호선 강남역 3번 출구<br>
+            테헤란로 직진 350m
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" aria-label="연세숲의원 홈">
+          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 2C16 2 6 10 6 18a10 10 0 0020 0C26 10 16 2 16 2z" opacity="0.2" fill="currentColor"/>
+            <path d="M16 4C16 4 9 11 9 17.5a7 7 0 0014 0C23 11 16 4 16 4z" opacity="0.4" fill="currentColor"/>
+            <path d="M16 8C16 8 12 13 12 17a4 4 0 008 0c0-4-4-9-4-9z" fill="currentColor"/>
+          </svg>
+          <span>연세숲의원</span>
+        </a>
+        <p>숲처럼 편안한 공간에서 환자 한 분 한 분에게 맞춤 진료를 제공하는 프리미엄 의원입니다.</p>
+      </div>
+
+      <div>
+        <h4>연락처</h4>
+        <ul class="footer-contact">
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            서울특별시 강남구 테헤란로 152 강남파이낸스센터 3층
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            02-555-1234
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            info@yonseisup.co.kr
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>사업자 정보</h4>
+        <ul class="footer-biz">
+          <li>대표: 박민수</li>
+          <li>사업자등록번호: 215-91-12345</li>
+          <li>연세숲의원</li>
+          <li>서울특별시 강남구 테헤란로 152</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; 2026 연세숲의원. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // === Navbar scroll effect (rAF-batched) ===
+  var nav = document.getElementById('nav');
+  var ticking = false;
+
+  function handleScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrollY > 40) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+
+  // === IntersectionObserver scroll reveal ===
+  var revealElements = document.querySelectorAll('[data-reveal]');
+
+  if ('IntersectionObserver' in window) {
+    var revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(function(el) {
+      revealObserver.observe(el);
+    });
+  } else {
+    // Fallback: show everything
+    revealElements.forEach(function(el) {
+      el.classList.add('revealed');
+    });
+  }
+
+  // === Smooth scroll for anchor links (fallback for older browsers) ===
+  var anchorLinks = document.querySelectorAll('a[href^="#"]');
+  anchorLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      var target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        var navHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 72;
+        var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // === Counter animation for stats ===
+  var statsObserved = false;
+  var statNumbers = document.querySelectorAll('.stat-number');
+
+  if ('IntersectionObserver' in window && statNumbers.length > 0) {
+    var statsCard = document.querySelector('.about-stats-card');
+    if (statsCard) {
+      var statsObserver = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting && !statsObserved) {
+          statsObserved = true;
+          animateCounters();
+          statsObserver.unobserve(statsCard);
+        }
+      }, { threshold: 0.5 });
+      statsObserver.observe(statsCard);
+    }
+  }
+
+  function animateCounters() {
+    var data = [
+      { target: 15, suffix: '+' },
+      { target: 30000, suffix: '+', format: true },
+      { target: 98, suffix: '%' }
+    ];
+
+    statNumbers.forEach(function(el, i) {
+      var d = data[i];
+      if (!d) return;
+      var duration = 1600;
+      var start = 0;
+      var startTime = null;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        // ease out cubic
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.floor(eased * d.target);
+
+        if (d.format && current >= 1000) {
+          el.innerHTML = current.toLocaleString() + '<span class="stat-suffix">' + d.suffix + '</span>';
+        } else {
+          el.innerHTML = current + '<span class="stat-suffix">' + d.suffix + '</span>';
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+
+      requestAnimationFrame(step);
+    });
+  }
+
+})();
+</script>
+</body>
+</html>

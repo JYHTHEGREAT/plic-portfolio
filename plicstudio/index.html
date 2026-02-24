@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="PLIC Studio - 기술과 디자인의 교차점에서 비즈니스의 본질을 디지털 경험으로 전환합니다.">
+<meta name="theme-color" content="#0a0a0a">
+<title>PLIC Studio</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap">
+<style>
+/* ============================================================
+   Design Tokens
+   ============================================================ */
+:root {
+  --bg: #0a0a0a;
+  --card-bg: #111111;
+  --accent: #2997ff;
+  --accent-glow: rgba(41, 151, 255, 0.35);
+  --text-primary: #f5f5f7;
+  --text-secondary: #86868b;
+  --text-tertiary: #8e8e93;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.16);
+  --radius-card: 16px;
+  --radius-pill: 100px;
+  --nav-height: 56px;
+  --section-pad: clamp(80px, 12vw, 160px);
+  --container: 1120px;
+  --font: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
+    'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', sans-serif;
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   Reset & Base
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; }
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+  .container { padding: 0 40px; }
+}
+
+/* Scroll reveal system */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal-children] > * {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+
+[data-reveal-children].is-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal-children].is-visible > *:nth-child(1) { transition-delay: 0s; }
+[data-reveal-children].is-visible > *:nth-child(2) { transition-delay: 0.1s; }
+[data-reveal-children].is-visible > *:nth-child(3) { transition-delay: 0.2s; }
+[data-reveal-children].is-visible > *:nth-child(4) { transition-delay: 0.3s; }
+
+/* Content visibility for performance — exclude hero to prevent render-skip issues */
+section:not(.hero) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+/* ============================================================
+   Navigation
+   ============================================================ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  transition: background 0.4s var(--ease), border-color 0.4s var(--ease),
+    backdrop-filter 0.4s var(--ease), -webkit-backdrop-filter 0.4s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+
+.nav.is-scrolled {
+  background: rgba(10, 10, 10, 0.8);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom-color: var(--border);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+  .nav__inner { padding: 0 40px; }
+}
+
+.nav__logo {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.nav__links {
+  display: none;
+  gap: 32px;
+}
+
+.nav__links a {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  transition: color 0.25s var(--ease);
+  letter-spacing: -0.01em;
+}
+
+.nav__links a:hover { color: var(--text-primary); }
+
+@media (min-width: 768px) {
+  .nav__links { display: flex; }
+  .nav__burger { display: none !important; }
+}
+
+/* Mobile hamburger — CSS-only */
+.nav__burger { display: flex; align-items: center; }
+
+.nav__burger-check {
+  display: none;
+}
+
+.nav__burger-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1001;
+}
+
+.nav__burger-label span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  transform-origin: center;
+}
+
+.nav__burger-check:checked ~ .nav__burger-label span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.nav__burger-check:checked ~ .nav__burger-label span:nth-child(2) {
+  opacity: 0;
+}
+.nav__burger-check:checked ~ .nav__burger-label span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+.nav__mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.97);
+  -webkit-backdrop-filter: blur(40px);
+  backdrop-filter: blur(40px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease);
+  z-index: 999;
+}
+
+.nav__burger-check:checked ~ .nav__mobile-menu {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav__mobile-menu a {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  transition: color 0.25s var(--ease);
+}
+
+.nav__mobile-menu a:hover { color: var(--accent); }
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  padding: 0 24px;
+}
+
+.hero__heading {
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.hero__sub {
+  font-size: clamp(16px, 2.2vw, 20px);
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 40px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  letter-spacing: -0.01em;
+  transition: background 0.3s var(--ease), transform 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+
+.btn-primary:hover {
+  background: #3da4ff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(41, 151, 255, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* ============================================================
+   Section Utility
+   ============================================================ */
+.section {
+  padding: var(--section-pad) 0;
+}
+
+.section__label {
+  font-size: clamp(12px, 1.5vw, 14px);
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+}
+
+.section__heading {
+  font-size: clamp(28px, 4.5vw, 48px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.section__sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+/* ============================================================
+   About
+   ============================================================ */
+.about__header {
+  margin-bottom: 64px;
+}
+
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .about__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.philosophy-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.philosophy-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+.philosophy-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 28px;
+  right: 28px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 0 0 2px 2px;
+}
+
+.philosophy-card__title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  margin-top: 8px;
+  color: var(--text-primary);
+}
+
+.philosophy-card__desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   Services
+   ============================================================ */
+.services__header {
+  margin-bottom: 64px;
+}
+
+.services__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .services__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.service-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 36px 32px;
+  transition: transform 0.4s var(--ease-out), border-color 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out);
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.service-card__icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 24px;
+  color: var(--accent);
+}
+
+.service-card__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.service-card__title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.service-card__desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   Works
+   ============================================================ */
+.works__header {
+  margin-bottom: 64px;
+}
+
+/* Tab bar */
+.works__tabs {
+  display: flex;
+  gap: 8px;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  touch-action: pan-y;
+}
+
+.works__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.works__tab {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-pill);
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  white-space: nowrap;
+}
+
+.works__tab:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-primary);
+}
+
+.works__tab.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Gallery (tab content area) */
+.works__gallery {
+  position: relative;
+  max-width: var(--container);
+  margin: 40px auto 0;
+  padding: 0 24px;
+  min-height: 500px;
+}
+
+/* Panel (each tab's content) */
+.works__panel {
+  display: none;
+  opacity: 0;
+}
+
+.works__panel.is-active {
+  display: block;
+  opacity: 1;
+  animation: worksFadeIn 0.5s var(--ease) both;
+}
+
+@keyframes worksFadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Preview (mockup container) */
+.works__preview {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.works__preview .browser-mock {
+  max-width: 780px;
+  width: 100%;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Info area */
+.works__info {
+  text-align: center;
+  padding: 0 24px;
+}
+
+.works__info h3 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.works__info p {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+/* CTA link */
+.works__cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 24px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s var(--ease);
+  margin-top: 20px;
+  text-decoration: none;
+}
+
+.works__cta-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(41, 151, 255, 0.08);
+}
+
+/* Slides container within a panel */
+.works__slides {
+  position: relative;
+}
+
+/* Individual slide */
+.works__slide {
+  display: none;
+}
+
+.works__slide.is-active {
+  display: block;
+  animation: worksFadeIn 0.5s var(--ease) both;
+}
+
+/* Navigation click zones — overlay on preview area */
+.works__nav {
+  position: absolute;
+  top: 0;
+  width: 20%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  opacity: 0.35;
+  transition: opacity 0.3s var(--ease);
+}
+
+.works__nav:hover {
+  opacity: 0.85;
+}
+
+.works__nav--prev {
+  left: 0;
+  justify-content: flex-start;
+  padding-left: 16px;
+  background: linear-gradient(to right, rgba(0,0,0,0.3), transparent);
+}
+
+.works__nav--next {
+  right: 0;
+  justify-content: flex-end;
+  padding-right: 16px;
+  background: linear-gradient(to left, rgba(0,0,0,0.3), transparent);
+}
+
+.works__nav-arrow {
+  color: rgba(255,255,255,0.8);
+  font-size: 24px;
+  font-weight: 300;
+  pointer-events: none;
+}
+
+/* Dot indicators */
+.works__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.works__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.3s var(--ease);
+}
+
+.works__dot.is-active {
+  background: var(--accent);
+}
+
+/* Hide nav/dots when single slide */
+.works__panel[data-slide-count="1"] .works__nav,
+.works__panel[data-slide-count="1"] .works__dots {
+  display: none;
+}
+
+/* Browser mockup */
+.browser-mock {
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.5s var(--ease-out);
+}
+
+.browser-mock__bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #1a1a1a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.browser-mock__dots {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.browser-mock__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.browser-mock__dot--red { background: #ff5f57; }
+.browser-mock__dot--yellow { background: #febc2e; }
+.browser-mock__dot--green { background: #28c840; }
+
+.browser-mock__address {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  text-align: center;
+  margin-left: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.browser-mock__content {
+  aspect-ratio: 16 / 10;
+  position: relative;
+  overflow: hidden;
+  background: #1a1a1a;
+}
+
+/* Live preview iframe */
+.browser-mock__content iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  transform: scale(0.5);
+  transform-origin: top left;
+  border: none;
+  pointer-events: none;
+}
+
+
+
+/* ============================================================
+   Contact
+   ============================================================ */
+.contact {
+  text-align: center;
+}
+
+.contact__header {
+  margin-bottom: 64px;
+}
+
+.contact__header .section__heading {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact__header .section__sub {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact__email-link {
+  display: inline-block;
+  font-size: clamp(24px, 4vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s var(--ease);
+}
+
+.contact__email-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: var(--text-primary);
+  transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.contact__email-link:hover {
+  color: var(--accent);
+}
+
+.contact__email-link:hover::after {
+  background: var(--accent);
+  box-shadow: 0 0 20px var(--accent-glow), 0 0 60px rgba(41, 151, 255, 0.15);
+}
+
+.contact__phone {
+  margin-top: 24px;
+  font-size: 16px;
+  color: var(--text-tertiary);
+  font-weight: 400;
+}
+
+.contact__phone a {
+  color: var(--text-secondary);
+  transition: color 0.25s var(--ease);
+}
+
+.contact__phone a:hover {
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 40px 0;
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .footer__inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.footer__copy {
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+.footer__links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer__links a {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  transition: color 0.25s var(--ease);
+}
+
+.footer__links a:hover {
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   Selection
+   ============================================================ */
+::selection {
+  background: rgba(41, 151, 255, 0.3);
+  color: #fff;
+}
+
+/* ============================================================
+   Scrollbar (Webkit)
+   ============================================================ */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* ============================================================
+   Hero — Crystallizing Text + Breathing Glow
+   ============================================================ */
+.hero__dot-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.04;
+  pointer-events: none;
+  will-change: transform;
+  z-index: 0;
+}
+
+.hero__glow-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  z-index: 0;
+}
+
+@keyframes heroGlowBreathe {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.05); }
+}
+
+.hero__glow-wrap {
+  animation: heroGlowBreathe 7s ease-in-out infinite;
+}
+
+.hero__glow {
+  position: relative;
+  width: 800px;
+  height: 800px;
+  transform: none;
+  top: auto;
+  left: auto;
+  background: radial-gradient(
+    circle,
+    rgba(41, 151, 255, 0.12) 0%,
+    rgba(41, 151, 255, 0.04) 35%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.hero__heading {
+  display: inline;
+}
+
+/* Hero elements hidden by default — JS reveals with animation */
+.hero .hero__sub,
+.hero .hero__cta {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* .hero__char styles now handled entirely by inline JS — no CSS dependency */
+
+@keyframes heroShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.hero__heading.is-shimmering {
+  background: linear-gradient(
+    90deg,
+    var(--text-primary) 0%,
+    var(--text-primary) 40%,
+    var(--accent) 50%,
+    var(--text-primary) 60%,
+    var(--text-primary) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: heroShimmer 3s ease-in-out 1;
+}
+
+.hero__cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.85em;
+  background: var(--accent);
+  margin-left: 4px;
+  vertical-align: text-bottom;
+  opacity: 0;
+}
+
+@keyframes heroCursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.hero__cursor.is-blinking {
+  animation: heroCursorBlink 0.6s step-end 4;
+}
+
+.hero__cursor.is-fading {
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+
+.hero .hero__sub {
+  margin-top: 24px;
+}
+
+
+/* ============================================================
+   Reduced Motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-children] > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero__glow-wrap {
+    animation: none;
+  }
+
+  /* Ensure hero elements are visible without animation */
+  .hero .hero__heading,
+  .hero .hero__sub,
+  .hero .hero__cta {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .hero__heading.is-shimmering {
+    animation: none;
+    background: none;
+    -webkit-text-fill-color: var(--text-primary);
+  }
+
+  .hero__cursor {
+    display: none;
+  }
+
+
+  .hero__dot-grid {
+    display: none;
+  }
+
+  .works__panel.is-active {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .works__slide.is-active {
+    animation: none;
+    opacity: 1;
+  }
+
+  .works__tab {
+    transition: none !important;
+  }
+
+  .works__cta-link {
+    transition: none !important;
+  }
+
+  .btn-primary,
+  .philosophy-card,
+  .service-card,
+  .work-item,
+  .browser-mock,
+  .phone-mock,
+  .nav,
+  .contact__email-link,
+  .contact__email-link::after,
+  .nav__links a,
+  .nav__mobile-menu a {
+    transition: none !important;
+  }
+}
+</style>
+<noscript><style>
+  .hero .hero__heading,
+  .hero .hero__sub,
+  .hero .hero__cta { opacity: 1 !important; transform: none !important; filter: none !important; }
+</style></noscript>
+</head>
+<body>
+
+<!-- ============================================================
+     Navigation
+     ============================================================ -->
+<nav class="nav" id="nav" aria-label="주 내비게이션">
+  <div class="nav__inner">
+    <a href="#" class="nav__logo">PLIC Studio</a>
+
+    <div class="nav__links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#works">Works</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <!-- Mobile hamburger — CSS only -->
+    <div class="nav__burger">
+      <input type="checkbox" class="nav__burger-check" id="navToggle" aria-label="메뉴 열기">
+      <label class="nav__burger-label" for="navToggle" aria-label="메뉴 열기">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <div class="nav__mobile-menu">
+        <a href="#about" onclick="document.getElementById('navToggle').checked=false">About</a>
+        <a href="#services" onclick="document.getElementById('navToggle').checked=false">Services</a>
+        <a href="#works" onclick="document.getElementById('navToggle').checked=false">Works</a>
+        <a href="#contact" onclick="document.getElementById('navToggle').checked=false">Contact</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============================================================
+     Hero
+     ============================================================ -->
+<section class="hero" id="hero" aria-label="메인">
+  <div class="hero__dot-grid" id="heroDotGrid"></div>
+  <div class="hero__glow-wrap" id="heroGlowWrap">
+    <div class="hero__glow" id="heroGlow"></div>
+  </div>
+  <div class="hero__content">
+    <h1 class="hero__heading" id="heroHeading" aria-label="기술과 디자인의 교차점에서.">기술과 디자인의<br>교차점에서.</h1>
+    <span class="hero__cursor" id="heroCursor"></span>
+    <p class="hero__sub" id="heroSub">우리는 비즈니스의 본질을 이해하고,<br>디지털 경험으로 전환합니다.</p>
+    <div class="hero__cta" id="heroCta">
+      <a href="#contact" class="btn-primary">프로젝트 시작하기</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     About
+     ============================================================ -->
+<section class="section" id="about" aria-label="소개">
+  <div class="container">
+    <div class="about__header" data-reveal>
+      <p class="section__label">About</p>
+      <h2 class="section__heading">우리는 단순한 웹사이트를<br>만들지 않습니다.</h2>
+      <p class="section__sub">비즈니스의 성장을 이끄는 디지털 경험을 설계합니다.</p>
+    </div>
+    <div class="about__grid" data-reveal-children>
+      <div class="philosophy-card">
+        <h3 class="philosophy-card__title">전략</h3>
+        <p class="philosophy-card__desc">데이터와 리서치를 기반으로 비즈니스 목표에 맞는 디지털 전략을 수립합니다.</p>
+      </div>
+      <div class="philosophy-card">
+        <h3 class="philosophy-card__title">디자인</h3>
+        <p class="philosophy-card__desc">사용자 중심의 직관적인 인터페이스로 브랜드의 가치를 시각화합니다.</p>
+      </div>
+      <div class="philosophy-card">
+        <h3 class="philosophy-card__title">기술</h3>
+        <p class="philosophy-card__desc">최신 웹 기술과 최적화된 코드로 빠르고 안정적인 경험을 구현합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Services
+     ============================================================ -->
+<section class="section" id="services" aria-label="서비스">
+  <div class="container">
+    <div class="services__header" data-reveal>
+      <p class="section__label">Services</p>
+      <h2 class="section__heading">무엇을 도와드릴까요?</h2>
+      <p class="section__sub">비즈니스에 필요한 모든 디지털 솔루션을 제공합니다.</p>
+    </div>
+    <div class="services__grid" data-reveal-children>
+
+      <!-- Web Design -->
+      <div class="service-card">
+        <div class="service-card__icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="6" width="40" height="28" rx="3" stroke="currentColor" stroke-width="2"/>
+            <line x1="4" y1="14" x2="44" y2="14" stroke="currentColor" stroke-width="2"/>
+            <line x1="24" y1="34" x2="24" y2="42" stroke="currentColor" stroke-width="2"/>
+            <line x1="16" y1="42" x2="32" y2="42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M32 22L28 26L32 30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" transform="translate(4,0) scale(-1,1) translate(-32,0)"/>
+            <circle cx="34" cy="24" r="3" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M36 22L38 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="service-card__title">Web Design</h3>
+        <p class="service-card__desc">브랜드 아이덴티티를 반영한 맞춤형 웹 디자인</p>
+      </div>
+
+      <!-- Web Development -->
+      <div class="service-card">
+        <div class="service-card__icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 14L6 24L16 34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M32 14L42 24L32 34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="28" y1="10" x2="20" y2="38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="service-card__title">Web Development</h3>
+        <p class="service-card__desc">최신 기술 스택 기반의 고성능 웹 개발</p>
+      </div>
+
+      <!-- Brand Identity -->
+      <div class="service-card">
+        <div class="service-card__icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 4L44 14V34L24 44L4 34V14L24 4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M24 4L24 44" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.4"/>
+            <path d="M4 14L44 34" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.4"/>
+            <path d="M44 14L4 34" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.4"/>
+            <circle cx="24" cy="24" r="6" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        <h3 class="service-card__title">Brand Identity</h3>
+        <p class="service-card__desc">일관된 브랜드 경험을 위한 아이덴티티 시스템</p>
+      </div>
+
+      <!-- SEO & Performance -->
+      <div class="service-card">
+        <div class="service-card__icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 38L14 26L22 30L30 16L42 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="42" cy="10" r="4" stroke="currentColor" stroke-width="2"/>
+            <path d="M42 10L38 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="6" y1="42" x2="42" y2="42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="6" y1="6" x2="6" y2="42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="service-card__title">SEO &amp; Performance</h3>
+        <p class="service-card__desc">검색 최적화와 성능 튜닝으로 비즈니스 성장 지원</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Works
+     ============================================================ -->
+<section class="section" id="works" aria-label="포트폴리오">
+  <div class="container">
+    <div class="works__header" data-reveal>
+      <p class="section__label">Portfolio</p>
+      <h2 class="section__heading">Selected Works</h2>
+    </div>
+  </div>
+  <!-- Tab Navigation -->
+  <div class="works__tabs" role="tablist" aria-label="포트폴리오 탐색">
+    <button class="works__tab is-active" id="worksTab0" role="tab" aria-selected="true" aria-controls="worksPanel0" tabindex="0">필라테스·피트니스</button>
+    <button class="works__tab" id="worksTab1" role="tab" aria-selected="false" aria-controls="worksPanel1" tabindex="-1">학원</button>
+    <button class="works__tab" id="worksTab2" role="tab" aria-selected="false" aria-controls="worksPanel2" tabindex="-1">병·의원</button>
+  </div>
+
+  <!-- Gallery Panels -->
+  <div class="works__gallery">
+
+    <!-- Panel 0 — 필라테스·피트니스 (1 slide) -->
+    <div class="works__panel is-active" id="worksPanel0" role="tabpanel" aria-labelledby="worksTab0" data-slide-count="1">
+      <div class="works__slides">
+        <div class="works__slide is-active">
+          <div class="works__preview">
+            <div class="browser-mock">
+              <div class="browser-mock__bar">
+                <div class="browser-mock__dots">
+                  <div class="browser-mock__dot browser-mock__dot--red"></div>
+                  <div class="browser-mock__dot browser-mock__dot--yellow"></div>
+                  <div class="browser-mock__dot browser-mock__dot--green"></div>
+                </div>
+                <div class="browser-mock__address">calipilates.kr</div>
+              </div>
+              <div class="browser-mock__content">
+                <iframe data-src="../pilates/index.html" title="캘리필라테스 미리보기" tabindex="-1"></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="works__info">
+            <h3>캘리필라테스</h3>
+            <p>필라테스 &middot; 바레 프리미엄 스튜디오</p>
+            <a href="../pilates/index.html" class="works__cta-link">살펴보기 &rarr;</a>
+          </div>
+        </div>
+        <div class="works__dots"></div>
+      </div>
+    </div>
+
+    <!-- Panel 1 — 학원 (1 slide) -->
+    <div class="works__panel" id="worksPanel1" role="tabpanel" aria-labelledby="worksTab1" data-slide-count="1">
+      <div class="works__slides">
+        <div class="works__slide is-active">
+          <div class="works__preview">
+            <div class="browser-mock">
+              <div class="browser-mock__bar">
+                <div class="browser-mock__dots">
+                  <div class="browser-mock__dot browser-mock__dot--red"></div>
+                  <div class="browser-mock__dot browser-mock__dot--yellow"></div>
+                  <div class="browser-mock__dot browser-mock__dot--green"></div>
+                </div>
+                <div class="browser-mock__address">higheli.kr</div>
+              </div>
+              <div class="browser-mock__content">
+                <iframe data-src="../academy/index.html" title="하이엘리영어학원 미리보기" tabindex="-1"></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="works__info">
+            <h3>하이엘리영어학원</h3>
+            <p>영어학원 브랜드 웹사이트</p>
+            <a href="../academy/index.html" class="works__cta-link">살펴보기 &rarr;</a>
+          </div>
+        </div>
+        <div class="works__dots"></div>
+      </div>
+    </div>
+
+    <!-- Panel 2 — 병·의원 (2 slides) -->
+    <div class="works__panel" id="worksPanel2" role="tabpanel" aria-labelledby="worksTab2" data-slide-count="2">
+      <div class="works__slides">
+
+        <!-- Slide 0 — 연세숲의원 -->
+        <div class="works__slide is-active">
+          <div class="works__preview">
+            <div class="works__nav works__nav--prev"><span class="works__nav-arrow">&#8249;</span></div>
+            <div class="works__nav works__nav--next"><span class="works__nav-arrow">&#8250;</span></div>
+            <div class="browser-mock">
+              <div class="browser-mock__bar">
+                <div class="browser-mock__dots">
+                  <div class="browser-mock__dot browser-mock__dot--red"></div>
+                  <div class="browser-mock__dot browser-mock__dot--yellow"></div>
+                  <div class="browser-mock__dot browser-mock__dot--green"></div>
+                </div>
+                <div class="browser-mock__address">yonsei-forest.kr</div>
+              </div>
+              <div class="browser-mock__content">
+                <iframe data-src="../hospital/index.html" title="연세숲의원 미리보기" tabindex="-1"></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="works__info">
+            <h3>연세숲의원</h3>
+            <p>내과 &middot; 가정의학과 반응형 웹사이트</p>
+            <a href="../hospital/index.html" class="works__cta-link">살펴보기 &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Slide 1 — 미래플러스치과 -->
+        <div class="works__slide">
+          <div class="works__preview">
+            <div class="works__nav works__nav--prev"><span class="works__nav-arrow">&#8249;</span></div>
+            <div class="works__nav works__nav--next"><span class="works__nav-arrow">&#8250;</span></div>
+            <div class="browser-mock">
+              <div class="browser-mock__bar">
+                <div class="browser-mock__dots">
+                  <div class="browser-mock__dot browser-mock__dot--red"></div>
+                  <div class="browser-mock__dot browser-mock__dot--yellow"></div>
+                  <div class="browser-mock__dot browser-mock__dot--green"></div>
+                </div>
+                <div class="browser-mock__address">miraeplus-dental.kr</div>
+              </div>
+              <div class="browser-mock__content">
+                <iframe data-src="../dental/index.html" title="미래플러스치과 미리보기" tabindex="-1"></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="works__info">
+            <h3>미래플러스치과</h3>
+            <p>프리미엄 심미치과 웹사이트</p>
+            <a href="../dental/index.html" class="works__cta-link">살펴보기 &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Dots (dynamically generated by JS) -->
+        <div class="works__dots"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     Contact
+     ============================================================ -->
+<section class="section contact" id="contact" aria-label="연락처">
+  <div class="container">
+    <div class="contact__header" data-reveal>
+      <p class="section__label">Contact</p>
+      <h2 class="section__heading">프로젝트를 함께 시작할<br>준비가 되셨나요?</h2>
+      <p class="section__sub">새로운 프로젝트에 대해 이야기해 주세요.</p>
+    </div>
+    <div data-reveal>
+      <a href="mailto:hello@plicstudio.kr" class="contact__email-link">hello@plicstudio.kr</a>
+      <p class="contact__phone">Phone <a href="tel:02-6925-0301">02-6925-0301</a></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     Footer
+     ============================================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <p class="footer__copy">&copy; 2026 PLIC Studio. All rights reserved.</p>
+      <div class="footer__links">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#works">Works</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JavaScript
+     ============================================================ -->
+<script>
+(function () {
+  'use strict';
+
+  /* -----------------------------------------------------------
+     Navigation scroll effect
+     ----------------------------------------------------------- */
+  var nav = document.getElementById('nav');
+  var heroGlow = document.getElementById('heroGlow');
+  var lastScrollY = 0;
+  var ticking = false;
+
+  function onScroll() {
+    lastScrollY = window.scrollY;
+    if (!ticking) {
+      window.requestAnimationFrame(function () {
+        /* Nav background */
+        if (lastScrollY > 40) {
+          nav.classList.add('is-scrolled');
+        } else {
+          nav.classList.remove('is-scrolled');
+        }
+
+        /* Parallax glow — applied to inner heroGlow (not heroGlowWrap) to preserve breathing animation */
+        if (heroGlow) {
+          heroGlow.style.transform =
+            'translateY(' + lastScrollY * 0.15 + 'px)';
+        }
+
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* -----------------------------------------------------------
+     IntersectionObserver — reveal on scroll
+     ----------------------------------------------------------- */
+  var revealElements = document.querySelectorAll('[data-reveal], [data-reveal-children]');
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: '0px 0px -60px 0px',
+      }
+    );
+
+    revealElements.forEach(function (el) {
+      observer.observe(el);
+    });
+  } else {
+    /* Fallback: show everything */
+    revealElements.forEach(function (el) {
+      el.classList.add('is-visible');
+    });
+  }
+
+  /* -----------------------------------------------------------
+     Smooth scroll for anchor links (Safari fallback)
+     ----------------------------------------------------------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+    anchor.addEventListener('click', function (e) {
+      var href = this.getAttribute('href');
+      if (!href || href === '#') return;
+      var target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        var offset = nav.offsetHeight;
+        var top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  /* -----------------------------------------------------------
+     Hero — Crystallizing Text Decode (v3 — Zero CSS dependency)
+     All char styles are INLINE. No CSS class for visibility.
+     No try-catch. No deferred execution. Runs immediately.
+     ----------------------------------------------------------- */
+  var HERO_TEXT = '기술과 디자인의\n교차점에서.';
+  var GEO = '·—|∙○◦◇◈▪▫△▽';
+  var STAGGER = 70;
+  var DECODE_MS = 400;
+  var FLIP_MS = 50;
+
+  var heroHeading = document.getElementById('heroHeading');
+  var heroCursor = document.getElementById('heroCursor');
+  var heroSub = document.getElementById('heroSub');
+  var heroCta = document.getElementById('heroCta');
+  var heroDotGrid = document.getElementById('heroDotGrid');
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (heroHeading) {
+    /* Step 1 — Clear heading, build spans with ALL styling inline */
+    heroHeading.innerHTML = '';
+    var heroItems = [];
+
+    HERO_TEXT.split('').forEach(function(ch) {
+      if (ch === '\n') {
+        heroHeading.appendChild(document.createElement('br'));
+        return;
+      }
+      var s = document.createElement('span');
+      s.setAttribute('aria-hidden', 'true');
+      /* ALL visibility controlled by inline style — zero CSS class dependency */
+      s.style.cssText = 'display:inline-block;white-space:pre;opacity:0;filter:blur(4px);';
+      s.textContent = ch;
+      heroHeading.appendChild(s);
+      heroItems.push({ el: s, ch: ch });
+    });
+
+    /* Always run scramble — demo presentation priority over reduced-motion */
+    /* Scramble → Decode sequence */
+    heroItems.forEach(function(item, i) {
+      setTimeout(function() {
+        /* Make char visible with scramble appearance */
+        item.el.style.opacity = '0.6';
+        item.el.style.filter = 'blur(2px)';
+
+        /* Flip through random geometric chars */
+        var timer = setInterval(function() {
+          item.el.textContent = GEO.charAt(Math.floor(Math.random() * GEO.length));
+        }, FLIP_MS);
+
+        /* Decode: reveal real character */
+        setTimeout(function() {
+          clearInterval(timer);
+          item.el.textContent = item.ch;
+          item.el.style.transition = prefersReducedMotion ? 'none' : 'opacity .35s cubic-bezier(.16,1,.3,1), filter .35s cubic-bezier(.16,1,.3,1)';
+          item.el.style.opacity = '1';
+          item.el.style.filter = 'none';
+        }, DECODE_MS);
+      }, i * STAGGER);
+    });
+
+    /* Post-decode cascade */
+    var totalMs = (heroItems.length - 1) * STAGGER + DECODE_MS;
+    var ease = prefersReducedMotion ? 'none' : 'opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1)';
+
+    /* Cursor blink */
+    setTimeout(function() {
+      if (heroCursor) { heroCursor.style.opacity = '1'; heroCursor.classList.add('is-blinking'); }
+    }, totalMs + 100);
+
+    /* Subtitle entrance */
+    setTimeout(function() {
+      if (heroSub) {
+        heroSub.style.transition = ease;
+        heroSub.style.opacity = '1';
+        heroSub.style.transform = 'translateY(0)';
+      }
+    }, totalMs + 300);
+
+    /* CTA entrance */
+    setTimeout(function() {
+      if (heroCta) {
+        heroCta.style.transition = ease;
+        heroCta.style.opacity = '1';
+        heroCta.style.transform = 'translateY(0)';
+      }
+    }, totalMs + 500);
+
+    /* Shimmer */
+    setTimeout(function() {
+      if (heroHeading) heroHeading.classList.add('is-shimmering');
+    }, totalMs + 600);
+
+    /* Cursor fade out */
+    setTimeout(function() {
+      if (heroCursor) { heroCursor.classList.remove('is-blinking'); heroCursor.classList.add('is-fading'); }
+    }, totalMs + 2500);
+  }
+
+  /* -----------------------------------------------------------
+     Dot Grid Parallax (desktop only)
+     ----------------------------------------------------------- */
+  if (heroDotGrid && !prefersReducedMotion && window.innerWidth >= 768) {
+    var dotTicking = false;
+    document.addEventListener('mousemove', function (e) {
+      if (dotTicking) return;
+      dotTicking = true;
+      requestAnimationFrame(function () {
+        var mx = (e.clientX / window.innerWidth - 0.5) * 6;
+        var my = (e.clientY / window.innerHeight - 0.5) * 6;
+        heroDotGrid.style.transform = 'translate(' + mx + 'px, ' + my + 'px)';
+        dotTicking = false;
+      });
+    }, { passive: true });
+  }
+
+  /* -----------------------------------------------------------
+     Works — Tab Gallery + Slide Navigation
+     ----------------------------------------------------------- */
+  var worksTabs = document.querySelectorAll('.works__tab');
+  var worksPanels = document.querySelectorAll('.works__panel');
+
+  if (worksTabs.length && worksPanels.length) {
+
+    /* === Iframe lazy loader === */
+    function loadSlideIframe(slide) {
+      if (!slide) return;
+      var iframe = slide.querySelector('iframe[data-src]');
+      if (iframe) {
+        iframe.src = iframe.getAttribute('data-src');
+        iframe.removeAttribute('data-src');
+      }
+    }
+
+    /* === Slide system initialization (auto-detect slide counts) === */
+    worksPanels.forEach(function(panel) {
+      var slides = panel.querySelectorAll('.works__slide');
+      var dotsContainer = panel.querySelector('.works__dots');
+
+      /* Set data attribute for CSS to use */
+      panel.setAttribute('data-slide-count', slides.length);
+
+      /* Generate dots dynamically */
+      if (dotsContainer && slides.length > 1) {
+        slides.forEach(function(_, i) {
+          var dot = document.createElement('button');
+          dot.className = 'works__dot' + (i === 0 ? ' is-active' : '');
+          dot.setAttribute('aria-label', '\uC2AC\uB77C\uC774\uB4DC ' + (i + 1));
+          dotsContainer.appendChild(dot);
+        });
+      }
+    });
+
+    /* Load iframes for initial active panel/slide */
+    var initialPanel = document.querySelector('.works__panel.is-active');
+    if (initialPanel) {
+      var initialSlide = initialPanel.querySelector('.works__slide.is-active');
+      loadSlideIframe(initialSlide);
+    }
+
+    /* === Switch slide within a panel === */
+    function switchSlide(panel, targetIndex) {
+      var slides = panel.querySelectorAll('.works__slide');
+      var dots = panel.querySelectorAll('.works__dot');
+      if (targetIndex < 0 || targetIndex >= slides.length) return;
+
+      slides.forEach(function(s) { s.classList.remove('is-active'); });
+      dots.forEach(function(d) { d.classList.remove('is-active'); });
+
+      slides[targetIndex].classList.add('is-active');
+      if (dots[targetIndex]) dots[targetIndex].classList.add('is-active');
+      loadSlideIframe(slides[targetIndex]);
+    }
+
+    function getActiveSlideIndex(panel) {
+      var slides = panel.querySelectorAll('.works__slide');
+      for (var i = 0; i < slides.length; i++) {
+        if (slides[i].classList.contains('is-active')) return i;
+      }
+      return 0;
+    }
+
+    /* === Nav zone + dot click handlers (single event delegation) === */
+    worksPanels.forEach(function(panel) {
+      panel.addEventListener('click', function(e) {
+        /* Nav arrows */
+        var nav = e.target.closest('.works__nav');
+        if (nav) {
+          var slides = panel.querySelectorAll('.works__slide');
+          var current = getActiveSlideIndex(panel);
+          if (nav.classList.contains('works__nav--next')) {
+            switchSlide(panel, (current + 1) % slides.length);
+          } else if (nav.classList.contains('works__nav--prev')) {
+            switchSlide(panel, (current - 1 + slides.length) % slides.length);
+          }
+          return;
+        }
+        /* Dot clicks */
+        var dot = e.target.closest('.works__dot');
+        if (dot) {
+          var dots = panel.querySelectorAll('.works__dot');
+          var idx = Array.prototype.indexOf.call(dots, dot);
+          if (idx !== -1) switchSlide(panel, idx);
+        }
+      });
+    });
+
+    /* === Tab click handler === */
+    worksTabs.forEach(function(tab, i) {
+      tab.addEventListener('click', function() {
+        worksTabs.forEach(function(t) { t.classList.remove('is-active'); t.setAttribute('aria-selected', 'false'); t.setAttribute('tabindex', '-1'); });
+        worksPanels.forEach(function(p) { p.classList.remove('is-active'); });
+
+        tab.classList.add('is-active');
+        tab.setAttribute('aria-selected', 'true');
+        tab.setAttribute('tabindex', '0');
+        worksPanels[i].classList.add('is-active');
+        var activeSlide = worksPanels[i].querySelector('.works__slide.is-active');
+        loadSlideIframe(activeSlide);
+      });
+    });
+
+    /* === Keyboard navigation === */
+    var tabList = document.querySelector('.works__tabs');
+    if (tabList) {
+      /* Arrow keys in tab bar -> switch tabs */
+      tabList.addEventListener('keydown', function(e) {
+        var idx = Array.prototype.indexOf.call(worksTabs, document.activeElement);
+        if (idx === -1) return;
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          var next = (idx + 1) % worksTabs.length;
+          worksTabs[next].focus();
+          worksTabs[next].click();
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          var prev = (idx - 1 + worksTabs.length) % worksTabs.length;
+          worksTabs[prev].focus();
+          worksTabs[prev].click();
+        }
+      });
+    }
+
+    /* Arrow keys in gallery area -> switch slides within active panel */
+    var gallery = document.querySelector('.works__gallery');
+    if (gallery) {
+      gallery.addEventListener('keydown', function(e) {
+        if (e.target.closest('.works__tabs')) return; /* Don't interfere with tab navigation */
+
+        var activePanel = gallery.querySelector('.works__panel.is-active');
+        if (!activePanel) return;
+        var slides = activePanel.querySelectorAll('.works__slide');
+        if (slides.length <= 1) return;
+
+        var current = getActiveSlideIndex(activePanel);
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          switchSlide(activePanel, (current + 1) % slides.length);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          switchSlide(activePanel, (current - 1 + slides.length) % slides.length);
+        }
+      });
+    }
+  }
+
+})();
+</script>
+</body>
+</html>

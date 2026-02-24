@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미래플러스치과 — 당신의 미소에 자신감을 더합니다</title>
+<meta name="description" content="미래플러스치과는 최신 장비와 숙련된 의료진이 함께하는 프리미엄 심미치과입니다. 임플란트, 심미보철, 치아교정, 미백 전문.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===== Design Tokens ===== */
+:root {
+  --color-primary: #1B3A5C;
+  --color-primary-light: #2A5580;
+  --color-primary-dark: #122840;
+  --color-accent: #C9A84C;
+  --color-accent-light: #D4B965;
+  --color-accent-text: #957625;
+  --color-accent-soft: rgba(201, 168, 76, 0.12);
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F5F8FC;
+  --color-text: #1A2332;
+  --color-text-secondary: #6B7D93;
+  --color-border: #E2E8F0;
+  --color-footer-bg: #0F1F30;
+  --radius-card: 16px;
+  --radius-btn: 12px;
+  --font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --max-width: 1200px;
+  --nav-height: 72px;
+  --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Reset & Base ===== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.7;
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ===== Typography ===== */
+h1 { font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 700; line-height: 1.25; }
+h2 { font-size: clamp(1.625rem, 3.5vw, 2.25rem); font-weight: 700; line-height: 1.3; }
+h3 { font-size: clamp(1.125rem, 2vw, 1.375rem); font-weight: 700; line-height: 1.4; }
+p  { font-size: clamp(0.938rem, 1.5vw, 1.063rem); }
+
+/* ===== Utility ===== */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 40px;
+  }
+}
+
+.section {
+  padding: 72px 0;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section-header h2 {
+  color: var(--color-text);
+  margin-bottom: 12px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-header .deco-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.section-header .deco-line span {
+  width: 40px;
+  height: 2px;
+  background: var(--color-accent);
+  border-radius: 1px;
+}
+
+.section-header .deco-line svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--color-accent);
+}
+
+.section-header p {
+  color: var(--color-text-secondary);
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ===== Scroll Reveal ===== */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s var(--transition-base), transform 0.7s var(--transition-base);
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal-stagger] > [data-reveal] {
+  transition-delay: calc(var(--reveal-i, 0) * 0.1s);
+}
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: var(--radius-btn);
+  font-size: 0.975rem;
+  font-weight: 500;
+  transition: background var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(27, 58, 92, 0.3);
+}
+
+.btn-outline {
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background: var(--color-bg-alt);
+  transform: translateY(-2px);
+}
+
+.btn-sm {
+  padding: 10px 24px;
+  font-size: 0.875rem;
+}
+
+/* ===== Navigation ===== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--nav-height);
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: background var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.nav.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 20px rgba(27, 58, 92, 0.08);
+  border-bottom: 1px solid rgba(27, 58, 92, 0.06);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  z-index: 1001;
+}
+
+.nav-logo svg {
+  width: 32px;
+  height: 32px;
+}
+
+.nav-links {
+  display: none;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav-links a {
+  font-size: 0.938rem;
+  font-weight: 400;
+  color: var(--color-text);
+  position: relative;
+  transition: color var(--transition-base);
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-base);
+}
+
+.nav-links a:hover {
+  color: var(--color-primary);
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-cta {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Hamburger (CSS-only) */
+.nav-toggle {
+  display: none;
+}
+
+.hamburger {
+  display: block;
+  width: 24px;
+  height: 20px;
+  position: relative;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.hamburger span,
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: transform var(--transition-base), opacity var(--transition-base), top var(--transition-base), bottom var(--transition-base);
+}
+
+.hamburger::before { top: 0; }
+.hamburger span { top: 9px; }
+.hamburger::after { bottom: 0; }
+
+.nav-toggle:checked ~ .hamburger::before {
+  transform: rotate(45deg);
+  top: 9px;
+}
+
+.nav-toggle:checked ~ .hamburger span {
+  opacity: 0;
+}
+
+.nav-toggle:checked ~ .hamburger::after {
+  transform: rotate(-45deg);
+  bottom: 9px;
+}
+
+.nav-toggle:checked ~ .nav-mobile-menu {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-mobile-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.4s var(--transition-base), opacity 0.4s var(--transition-base);
+  z-index: 999;
+}
+
+.nav-mobile-menu a {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--color-text);
+  transition: color var(--transition-base);
+}
+
+.nav-mobile-menu a:hover {
+  color: var(--color-primary);
+}
+
+.nav-mobile-menu .btn {
+  margin-top: 8px;
+}
+
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
+  }
+
+  .nav-cta {
+    display: flex;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .nav-mobile-menu {
+    display: none;
+  }
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--color-bg-alt) 0%, var(--color-bg) 100%);
+  padding-top: calc(var(--nav-height) + 20px);
+  padding-bottom: 40px;
+}
+
+.hero-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+  width: 100%;
+  text-align: center;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  flex-shrink: 0;
+}
+
+.hero h1 {
+  margin-bottom: 20px;
+  color: var(--color-primary);
+}
+
+.hero h1 .accent {
+  color: var(--color-accent);
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  color: var(--color-text-secondary);
+  margin-bottom: 40px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 300;
+  line-height: 1.8;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Hero Tooth Animation */
+.hero-tooth-wrapper {
+  position: relative;
+  width: 220px;
+  height: 260px;
+  flex-shrink: 0;
+}
+
+.hero-tooth-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180px;
+  height: 180px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.15) 0%, rgba(27, 58, 92, 0.05) 50%, transparent 70%);
+  border-radius: 50%;
+  animation: toothGlow 3s ease-in-out infinite;
+}
+
+@keyframes toothGlow {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+  50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+}
+
+.hero-tooth-svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 150px;
+  filter: drop-shadow(0 8px 32px rgba(27, 58, 92, 0.15));
+}
+
+.hero-tooth-shine {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 130px;
+  height: 160px;
+  overflow: hidden;
+  border-radius: 40%;
+  pointer-events: none;
+}
+
+.hero-tooth-shine::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -100%;
+  width: 60%;
+  height: 140%;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.5) 45%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.5) 55%, transparent 70%);
+  animation: toothShine 4s ease-in-out infinite;
+}
+
+@keyframes toothShine {
+  0%, 100% { left: -100%; }
+  40%, 60% { left: 150%; }
+}
+
+/* Floating particles around tooth */
+.tooth-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--color-accent);
+  border-radius: 50%;
+  opacity: 0;
+  animation: particleFloat 5s ease-in-out infinite;
+}
+
+.tooth-particle:nth-child(1) {
+  top: 15%;
+  left: 20%;
+  animation-delay: 0s;
+  width: 5px;
+  height: 5px;
+}
+
+.tooth-particle:nth-child(2) {
+  top: 25%;
+  right: 15%;
+  animation-delay: 1s;
+  width: 4px;
+  height: 4px;
+}
+
+.tooth-particle:nth-child(3) {
+  bottom: 30%;
+  left: 15%;
+  animation-delay: 2s;
+  width: 6px;
+  height: 6px;
+}
+
+.tooth-particle:nth-child(4) {
+  bottom: 20%;
+  right: 20%;
+  animation-delay: 3s;
+  width: 3px;
+  height: 3px;
+}
+
+@keyframes particleFloat {
+  0%, 100% { opacity: 0; transform: translateY(0) scale(0.5); }
+  20% { opacity: 0.6; }
+  50% { opacity: 0.8; transform: translateY(-20px) scale(1); }
+  80% { opacity: 0.4; }
+}
+
+@media (min-width: 768px) {
+  .hero-inner {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .hero-content {
+    max-width: 580px;
+  }
+
+  .hero-subtitle {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .hero-btns {
+    justify-content: flex-start;
+  }
+
+  .hero-tooth-wrapper {
+    width: 320px;
+    height: 380px;
+  }
+
+  .hero-tooth-svg {
+    width: 160px;
+    height: 200px;
+  }
+
+  .hero-tooth-glow {
+    width: 240px;
+    height: 240px;
+  }
+
+  .hero-tooth-shine {
+    width: 170px;
+    height: 210px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-tooth-wrapper {
+    width: 260px;
+    height: 320px;
+  }
+}
+
+/* ===== About Section ===== */
+.about {
+  background: var(--color-bg-alt);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+}
+
+.about-text h3 {
+  color: var(--color-primary);
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  margin-bottom: 20px;
+}
+
+.about-text p {
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.85;
+}
+
+.about-text p:last-of-type {
+  margin-bottom: 0;
+}
+
+.about-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.stat-box {
+  background: var(--color-bg);
+  border-radius: var(--radius-card);
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border: 1px solid var(--color-border);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.stat-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(27, 58, 92, 0.08);
+  border-color: rgba(201, 168, 76, 0.3);
+}
+
+.stat-number {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  color: var(--color-accent-text);
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.stat-suffix {
+  font-size: 0.55em;
+  color: var(--color-accent-text);
+}
+
+.stat-label {
+  font-size: 0.938rem;
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+.stat-title {
+  font-size: 1.05rem;
+  color: var(--color-text);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+@media (max-width: 480px) {
+  .stat-box {
+    padding: 22px 20px;
+    gap: 16px;
+  }
+  .stat-number {
+    font-size: 1.75rem;
+  }
+}
+
+/* ===== Services ===== */
+.services {
+  background: var(--color-bg);
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .service-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .service-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.service-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 32px 28px;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--transition-base);
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(27, 58, 92, 0.1);
+  border-color: rgba(27, 58, 92, 0.15);
+}
+
+.service-card:hover::before {
+  transform: scaleX(1);
+}
+
+.service-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--color-bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: background var(--transition-base);
+}
+
+.service-card:hover .service-icon {
+  background: var(--color-primary);
+}
+
+.service-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--color-primary);
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke var(--transition-base);
+}
+
+.service-card:hover .service-icon svg {
+  stroke: #fff;
+}
+
+.service-card h3 {
+  margin-bottom: 10px;
+  color: var(--color-text);
+}
+
+.service-card p {
+  color: var(--color-text-secondary);
+  font-size: 0.925rem;
+  line-height: 1.7;
+}
+
+/* ===== Doctors ===== */
+.doctors {
+  background: var(--color-bg-alt);
+}
+
+.doctor-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .doctor-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .doctor-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.doctor-card {
+  background: var(--color-bg);
+  border-radius: var(--radius-card);
+  padding: 32px 24px;
+  text-align: center;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+  border: 1px solid transparent;
+}
+
+.doctor-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(27, 58, 92, 0.1);
+  border-color: var(--color-border);
+}
+
+.doctor-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.doctor-avatar::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(201, 168, 76, 0.25);
+}
+
+.doctor-card:nth-child(1) .doctor-avatar {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+}
+
+.doctor-card:nth-child(2) .doctor-avatar {
+  background: linear-gradient(135deg, var(--color-primary-light), #3A6A8C);
+}
+
+.doctor-card:nth-child(3) .doctor-avatar {
+  background: linear-gradient(135deg, #2A4F6E, var(--color-primary-light));
+}
+
+.doctor-avatar svg {
+  width: 48px;
+  height: 48px;
+  fill: rgba(255, 255, 255, 0.85);
+}
+
+.doctor-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.doctor-role {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-accent-text);
+  margin-bottom: 20px;
+}
+
+.doctor-info {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.doctor-info li {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  padding: 5px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+}
+
+.doctor-info li::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+.doctor-specialty {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.doctor-specialty span {
+  font-size: 0.813rem;
+  padding: 5px 14px;
+  background: var(--color-accent-soft);
+  color: var(--color-primary);
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+/* ===== Before & After ===== */
+.before-after {
+  background: var(--color-bg);
+}
+
+.ba-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .ba-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .ba-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.ba-card {
+  background: var(--color-bg);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.ba-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(27, 58, 92, 0.1);
+}
+
+.ba-visual {
+  display: flex;
+  height: 150px;
+  position: relative;
+}
+
+.ba-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ba-side-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.ba-before {
+  color: #8B95A3;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.ba-after {
+  color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.ba-divider {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.ba-divider-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  background: var(--color-bg);
+  border: 2px solid var(--color-accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ba-divider-handle svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--color-accent);
+  fill: none;
+  stroke-width: 2;
+}
+
+/* Before/After gradients */
+.ba-card:nth-child(1) .ba-side:first-child {
+  background: linear-gradient(135deg, #C4CCDA, #A0AAB8);
+}
+.ba-card:nth-child(1) .ba-side:last-child {
+  background: linear-gradient(135deg, #E8EDF4, #F5F8FC);
+}
+
+.ba-card:nth-child(2) .ba-side:first-child {
+  background: linear-gradient(135deg, #B8C0CE, #9AA4B4);
+}
+.ba-card:nth-child(2) .ba-side:last-child {
+  background: linear-gradient(135deg, #DDE5F0, #EDF2F8);
+}
+
+.ba-card:nth-child(3) .ba-side:first-child {
+  background: linear-gradient(135deg, #C8CABC, #B0B4A6);
+}
+.ba-card:nth-child(3) .ba-side:last-child {
+  background: linear-gradient(135deg, #F0F2EC, #FAFBF8);
+}
+
+.ba-content {
+  padding: 24px;
+}
+
+.ba-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.ba-desc {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* ===== Location ===== */
+.location {
+  background: var(--color-bg-alt);
+}
+
+.location-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 768px) {
+  .location-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+}
+
+.hours-card {
+  background: var(--color-bg);
+  border-radius: var(--radius-card);
+  padding: 28px 24px;
+  border: 1px solid var(--color-border);
+}
+
+.hours-card h3 {
+  color: var(--color-text);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hours-card h3 svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--color-primary);
+  fill: none;
+  stroke-width: 2;
+}
+
+.hours-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.hours-table tr {
+  border-bottom: 1px solid #F0F0F0;
+}
+
+.hours-table tr:last-child {
+  border-bottom: none;
+}
+
+.hours-table td {
+  padding: 14px 0;
+  font-size: 0.938rem;
+}
+
+.hours-table td:first-child {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.hours-table td:last-child {
+  text-align: right;
+  color: var(--color-text-secondary);
+}
+
+.hours-table tr.closed td:last-child {
+  color: #D94452;
+  font-weight: 500;
+}
+
+.location-info-card {
+  background: var(--color-bg);
+  border-radius: var(--radius-card);
+  padding: 28px 24px;
+  border: 1px solid var(--color-border);
+}
+
+.location-info-card h3 {
+  color: var(--color-text);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.location-info-card h3 svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--color-primary);
+  fill: none;
+  stroke-width: 2;
+}
+
+.location-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.location-item:last-child {
+  margin-bottom: 0;
+}
+
+.location-item-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--color-bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.location-item-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--color-primary);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.location-item-text {
+  font-size: 0.938rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.location-item-text strong {
+  display: block;
+  color: var(--color-text);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.location-item-text .phone-number {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* ===== Footer ===== */
+.footer {
+  background: var(--color-footer-bg);
+  color: rgba(255, 255, 255, 0.75);
+  padding: 56px 0 28px;
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.footer-logo svg {
+  width: 28px;
+  height: 28px;
+}
+
+.footer-info {
+  font-size: 0.85rem;
+  line-height: 2;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 24px;
+}
+
+.footer-info span {
+  display: block;
+}
+
+.footer-info .divider {
+  display: none;
+  margin: 0 8px;
+  opacity: 0.3;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 20px;
+  text-align: center;
+  font-size: 0.813rem;
+  opacity: 0.4;
+}
+
+/* ===== Responsive Fine-tuning ===== */
+@media (min-width: 768px) {
+  .section {
+    padding: 100px 0;
+  }
+
+  .section-header {
+    margin-bottom: 64px;
+  }
+
+  .hero {
+    padding-top: var(--nav-height);
+    padding-bottom: 0;
+  }
+
+  .doctor-card {
+    padding: 40px 32px;
+  }
+
+  .hours-card, .location-info-card {
+    padding: 36px 32px;
+  }
+
+  .ba-visual {
+    height: 180px;
+  }
+
+  .footer-info span {
+    display: inline;
+  }
+
+  .footer-info .divider {
+    display: inline;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Disable scroll reveal animations */
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  /* Disable hero tooth animations */
+  .hero-tooth-glow,
+  .hero-tooth-shine::after,
+  .tooth-particle {
+    animation: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Navigation ===== -->
+<nav class="nav" id="nav" aria-label="주 내비게이션">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="미래플러스치과 홈">
+      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <!-- Tooth with cross icon -->
+        <path d="M16 3c-2.5 0-4.5 0.8-6 2.2C8.5 6.6 7.5 8.5 7 11c-0.5 2.5-0.2 5 0.5 7.5 0.7 2.5 1.5 5 2.5 7 0.5 1 1.2 1.5 2 1.5s1.5-0.8 2-2.5c0.3-1 0.7-1.5 1-1.5h2c0.3 0 0.7 0.5 1 1.5 0.5 1.7 1.2 2.5 2 2.5s1.5-0.5 2-1.5c1-2 1.8-4.5 2.5-7 0.7-2.5 1-5 0.5-7.5-0.5-2.5-1.5-4.4-3-5.8C20.5 3.8 18.5 3 16 3z" fill="var(--color-primary)" opacity="0.9"/>
+        <path d="M13 10h6M16 7v6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <span>미래플러스치과</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#about">소개</a>
+      <a href="#services">진료과목</a>
+      <a href="#doctors">의료진</a>
+      <a href="#before-after">치료사례</a>
+      <a href="#location">오시는 길</a>
+    </div>
+
+    <div class="nav-cta">
+      <a href="#location" class="btn btn-primary btn-sm">진료 예약</a>
+    </div>
+
+    <!-- Mobile menu (CSS-only toggle) -->
+    <input type="checkbox" id="navToggle" class="nav-toggle" aria-label="메뉴 열기">
+    <label for="navToggle" class="hamburger" aria-label="메뉴 열기">
+      <span></span>
+    </label>
+    <div class="nav-mobile-menu">
+      <a href="#about" onclick="document.getElementById('navToggle').checked=false">소개</a>
+      <a href="#services" onclick="document.getElementById('navToggle').checked=false">진료과목</a>
+      <a href="#doctors" onclick="document.getElementById('navToggle').checked=false">의료진</a>
+      <a href="#before-after" onclick="document.getElementById('navToggle').checked=false">치료사례</a>
+      <a href="#location" onclick="document.getElementById('navToggle').checked=false">오시는 길</a>
+      <a href="#location" class="btn btn-primary" onclick="document.getElementById('navToggle').checked=false">진료 예약</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="hero" aria-label="메인">
+  <div class="container">
+    <div class="hero-inner" data-reveal>
+      <div class="hero-content">
+        <h1>당신의 미소에<br><span class="accent">자신감</span>을 더합니다</h1>
+        <p class="hero-subtitle">
+          최신 장비와 숙련된 의료진이 함께하는<br>
+          프리미엄 심미치과
+        </p>
+        <div class="hero-btns">
+          <a href="#location" class="btn btn-primary">온라인 상담</a>
+          <a href="#location" class="btn btn-outline">진료 예약</a>
+        </div>
+      </div>
+      <div class="hero-tooth-wrapper" aria-hidden="true">
+        <div class="hero-tooth-glow"></div>
+        <!-- Tooth SVG silhouette -->
+        <svg class="hero-tooth-svg" viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="toothGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#1B3A5C;stop-opacity:0.08"/>
+              <stop offset="100%" style="stop-color:#1B3A5C;stop-opacity:0.18"/>
+            </linearGradient>
+            <linearGradient id="toothFill" x1="0%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%" style="stop-color:#2A5580"/>
+              <stop offset="100%" style="stop-color:#1B3A5C"/>
+            </linearGradient>
+          </defs>
+          <path d="M60 5 C42 5 28 12 22 25 C16 38 18 52 22 68 C26 84 32 100 38 112 C41 118 45 122 50 122 C55 122 57 116 60 108 C63 116 65 122 70 122 C75 122 79 118 82 112 C88 100 94 84 98 68 C102 52 104 38 98 25 C92 12 78 5 60 5 Z" fill="url(#toothFill)" stroke="none"/>
+          <!-- Subtle highlight on tooth surface -->
+          <path d="M45 20 C50 16 55 14 60 14 C65 14 70 16 75 20 C70 28 65 32 60 32 C55 32 50 28 45 20 Z" fill="rgba(255,255,255,0.15)"/>
+          <!-- Root line -->
+          <path d="M52 95 C55 85 58 80 60 80 C62 80 65 85 68 95" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        </svg>
+        <div class="hero-tooth-shine"></div>
+        <!-- Floating particles -->
+        <div class="tooth-particle"></div>
+        <div class="tooth-particle"></div>
+        <div class="tooth-particle"></div>
+        <div class="tooth-particle"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== About ===== -->
+<section class="section about" id="about" aria-label="소개">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="deco-line">
+        <span></span>
+        <svg viewBox="0 0 24 24"><path d="M12 2L9 7H3l5 4-2 7 6-4 6 4-2-7 5-4h-6z"/></svg>
+        <span></span>
+      </div>
+      <h2>미래플러스치과를 소개합니다</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text" data-reveal>
+        <h3>환자 중심의 프리미엄 치과</h3>
+        <p>
+          미래플러스치과는 환자 한 분 한 분의 구강 건강과 아름다운 미소를 위해
+          최선을 다합니다.
+        </p>
+        <p>
+          최첨단 디지털 장비와 풍부한 임상 경험을 바탕으로
+          정확한 진단과 최적의 치료를 제공합니다.
+        </p>
+      </div>
+
+      <div class="about-stats" data-reveal-stagger>
+        <div class="stat-box" data-reveal style="--reveal-i:0">
+          <div>
+            <div class="stat-number">12<span class="stat-suffix">년</span></div>
+          </div>
+          <div>
+            <div class="stat-title">개원</div>
+            <div class="stat-label">풍부한 임상 경험의 전문 의료진</div>
+          </div>
+        </div>
+        <div class="stat-box" data-reveal style="--reveal-i:1">
+          <div>
+            <div class="stat-number">25,000<span class="stat-suffix">+</span></div>
+          </div>
+          <div>
+            <div class="stat-title">누적 환자</div>
+            <div class="stat-label">지역 주민이 신뢰하는 치과</div>
+          </div>
+        </div>
+        <div class="stat-box" data-reveal style="--reveal-i:2">
+          <div>
+            <div class="stat-number">5,000<span class="stat-suffix">+</span></div>
+          </div>
+          <div>
+            <div class="stat-title">임플란트 케이스</div>
+            <div class="stat-label">정밀 시술 전문 클리닉</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Services ===== -->
+<section class="section services" id="services" aria-label="진료과목">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="deco-line">
+        <span></span>
+        <svg viewBox="0 0 24 24"><path d="M12 2L9 7H3l5 4-2 7 6-4 6 4-2-7 5-4h-6z"/></svg>
+        <span></span>
+      </div>
+      <h2>진료과목 안내</h2>
+      <p>분야별 전문 의료진이 최적의 치료를 제공합니다</p>
+    </div>
+
+    <div class="service-grid" data-reveal-stagger>
+      <!-- 임플란트 -->
+      <div class="service-card" data-reveal style="--reveal-i:0">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2C10 2 8.5 3.5 8.5 5.5C8.5 7 9.5 8.3 11 8.8V11H13V8.8C14.5 8.3 15.5 7 15.5 5.5C15.5 3.5 14 2 12 2Z"/>
+            <rect x="10.5" y="11" width="3" height="2" rx="0.5"/>
+            <path d="M10.5 13L9.5 22M13.5 13L14.5 22"/>
+            <path d="M9 16h6M9.2 19h5.6"/>
+          </svg>
+        </div>
+        <h3>임플란트</h3>
+        <p>3D CT 정밀 분석 기반 임플란트 시술</p>
+      </div>
+
+      <!-- 심미보철 -->
+      <div class="service-card" data-reveal style="--reveal-i:1">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3C8 3 5 5 5 8C5 11 7 13 7 13H17C17 13 19 11 19 8C19 5 16 3 12 3Z"/>
+            <path d="M7 13C7 13 6 16 6 18C6 20 8 21 12 21C16 21 18 20 18 18C18 16 17 13 17 13"/>
+            <path d="M9 8.5H15"/>
+          </svg>
+        </div>
+        <h3>심미보철</h3>
+        <p>라미네이트, 올세라믹 크라운 등 자연스러운 심미 보철</p>
+      </div>
+
+      <!-- 치아교정 -->
+      <div class="service-card" data-reveal style="--reveal-i:2">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="4" y="9" width="16" height="6" rx="3"/>
+            <rect x="7" y="10.5" width="3" height="3" rx="0.5"/>
+            <rect x="14" y="10.5" width="3" height="3" rx="0.5"/>
+            <path d="M10 12H14"/>
+            <path d="M4 12H2M22 12H20"/>
+          </svg>
+        </div>
+        <h3>치아교정</h3>
+        <p>투명교정, 설측교정 등 맞춤형 교정 치료</p>
+      </div>
+
+      <!-- 치아미백 -->
+      <div class="service-card" data-reveal style="--reveal-i:3">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3C10 3 8.5 4.5 8 7C7.5 9.5 8 11 9 12.5C10 14 10.5 15 10.5 17C10.5 18.5 11 19 12 19C13 19 13.5 18.5 13.5 17C13.5 15 14 14 15 12.5C16 11 16.5 9.5 16 7C15.5 4.5 14 3 12 3Z"/>
+            <path d="M5 4L7 6M19 4L17 6M3 10H5.5M18.5 10H21M5 16L7 14.5M19 16L17 14.5"/>
+          </svg>
+        </div>
+        <h3>치아미백</h3>
+        <p>전문 미백 시스템으로 환한 미소 되찾기</p>
+      </div>
+
+      <!-- 일반진료 -->
+      <div class="service-card" data-reveal style="--reveal-i:4">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3C10 3 8 4.5 7.5 7C7 9.5 7.5 11.5 8.5 13.5C9.5 15.5 10 17 10 18.5C10 19.5 10.5 20 11.5 20C12.5 20 13 19 13 18L13.5 20C14.5 20 15 19.5 15 18.5C15 17 15.5 15.5 16.5 13.5C17.5 11.5 18 9.5 17.5 7C17 4.5 15 3 12 3Z"/>
+            <path d="M10 8H14M12 6V10"/>
+          </svg>
+        </div>
+        <h3>일반진료</h3>
+        <p>충치, 신경, 잇몸 치료 등 기본 구강 관리</p>
+      </div>
+
+      <!-- 소아치과 -->
+      <div class="service-card" data-reveal style="--reveal-i:5">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 4C10.5 4 9.2 5 8.8 6.5C8.4 8 8.7 9.5 9.5 11C10.3 12.5 10.5 13.5 10.5 15C10.5 16 11 16.5 12 16.5C13 16.5 13.5 16 13.5 15C13.5 13.5 13.7 12.5 14.5 11C15.3 9.5 15.6 8 15.2 6.5C14.8 5 13.5 4 12 4Z"/>
+            <circle cx="10.5" cy="7.5" r="0.8" fill="currentColor"/>
+            <circle cx="13.5" cy="7.5" r="0.8" fill="currentColor"/>
+            <path d="M10.5 9.5C10.5 9.5 11 10.5 12 10.5C13 10.5 13.5 9.5 13.5 9.5"/>
+            <path d="M7 19C8 18 10 17.5 12 17.5C14 17.5 16 18 17 19"/>
+            <path d="M8 21C9 20.2 10.5 19.5 12 19.5C13.5 19.5 15 20.2 16 21"/>
+          </svg>
+        </div>
+        <h3>소아치과</h3>
+        <p>아이 눈높이에 맞춘 편안한 소아 전문 진료</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Doctors ===== -->
+<section class="section doctors" id="doctors" aria-label="의료진">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="deco-line">
+        <span></span>
+        <svg viewBox="0 0 24 24"><path d="M12 2L9 7H3l5 4-2 7 6-4 6 4-2-7 5-4h-6z"/></svg>
+        <span></span>
+      </div>
+      <h2>의료진 소개</h2>
+      <p>풍부한 임상 경험의 전문 의료진이 함께합니다</p>
+    </div>
+
+    <div class="doctor-grid" data-reveal-stagger>
+      <!-- Doctor 1 -->
+      <div class="doctor-card" data-reveal style="--reveal-i:0">
+        <div class="doctor-avatar" aria-label="정하늘 대표원장">
+          <!-- Doctor silhouette SVG -->
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="16" r="8" fill="rgba(255,255,255,0.85)"/>
+            <path d="M10 42C10 33 16 28 24 28C32 28 38 33 38 42" fill="rgba(255,255,255,0.85)"/>
+          </svg>
+        </div>
+        <div class="doctor-name">정하늘</div>
+        <div class="doctor-role">대표원장</div>
+        <ul class="doctor-info">
+          <li>서울대학교 치의학과 졸업</li>
+          <li>前 서울대학교치과병원 보철과 전공의</li>
+          <li>대한심미치과학회 정회원</li>
+        </ul>
+        <div class="doctor-specialty">
+          <span>임플란트</span>
+          <span>심미보철</span>
+        </div>
+      </div>
+
+      <!-- Doctor 2 -->
+      <div class="doctor-card" data-reveal style="--reveal-i:1">
+        <div class="doctor-avatar" aria-label="김민서 부원장">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="16" r="8" fill="rgba(255,255,255,0.85)"/>
+            <path d="M10 42C10 33 16 28 24 28C32 28 38 33 38 42" fill="rgba(255,255,255,0.85)"/>
+          </svg>
+        </div>
+        <div class="doctor-name">김민서</div>
+        <div class="doctor-role">부원장</div>
+        <ul class="doctor-info">
+          <li>연세대학교 치의학전문대학원 졸업</li>
+          <li>前 연세대학교치과병원 교정과 전공의</li>
+        </ul>
+        <div class="doctor-specialty">
+          <span>치아교정</span>
+          <span>투명교정</span>
+        </div>
+      </div>
+
+      <!-- Doctor 3 -->
+      <div class="doctor-card" data-reveal style="--reveal-i:2">
+        <div class="doctor-avatar" aria-label="이준호 전문의">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="16" r="8" fill="rgba(255,255,255,0.85)"/>
+            <path d="M10 42C10 33 16 28 24 28C32 28 38 33 38 42" fill="rgba(255,255,255,0.85)"/>
+          </svg>
+        </div>
+        <div class="doctor-name">이준호</div>
+        <div class="doctor-role">전문의</div>
+        <ul class="doctor-info">
+          <li>경희대학교 치의학과 졸업</li>
+          <li>前 경희대학교치과병원 구강외과 전공의</li>
+        </ul>
+        <div class="doctor-specialty">
+          <span>임플란트 외과</span>
+          <span>발치</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Before & After ===== -->
+<section class="section before-after" id="before-after" aria-label="치료 전후">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="deco-line">
+        <span></span>
+        <svg viewBox="0 0 24 24"><path d="M12 2L9 7H3l5 4-2 7 6-4 6 4-2-7 5-4h-6z"/></svg>
+        <span></span>
+      </div>
+      <h2>치료 사례</h2>
+      <p>미래플러스치과의 실제 치료 전후 변화를 확인하세요</p>
+    </div>
+
+    <div class="ba-grid" data-reveal-stagger>
+      <!-- Case 1 -->
+      <div class="ba-card" data-reveal style="--reveal-i:0">
+        <div class="ba-visual">
+          <div class="ba-side">
+            <span class="ba-side-label ba-before">Before</span>
+          </div>
+          <div class="ba-divider">
+            <div class="ba-divider-handle">
+              <svg viewBox="0 0 24 24"><path d="M8 12H3M16 12H21M8 12L11 9M8 12L11 15M16 12L13 9M16 12L13 15"/></svg>
+            </div>
+          </div>
+          <div class="ba-side">
+            <span class="ba-side-label ba-after">After</span>
+          </div>
+        </div>
+        <div class="ba-content">
+          <div class="ba-title">라미네이트 심미보철</div>
+          <div class="ba-desc">변색된 앞니에서 자연스러운 올세라믹 라미네이트로</div>
+        </div>
+      </div>
+
+      <!-- Case 2 -->
+      <div class="ba-card" data-reveal style="--reveal-i:1">
+        <div class="ba-visual">
+          <div class="ba-side">
+            <span class="ba-side-label ba-before">Before</span>
+          </div>
+          <div class="ba-divider">
+            <div class="ba-divider-handle">
+              <svg viewBox="0 0 24 24"><path d="M8 12H3M16 12H21M8 12L11 9M8 12L11 15M16 12L13 9M16 12L13 15"/></svg>
+            </div>
+          </div>
+          <div class="ba-side">
+            <span class="ba-side-label ba-after">After</span>
+          </div>
+        </div>
+        <div class="ba-content">
+          <div class="ba-title">임플란트</div>
+          <div class="ba-desc">결손 부위에서 자연치아와 동일한 임플란트 식립으로</div>
+        </div>
+      </div>
+
+      <!-- Case 3 -->
+      <div class="ba-card" data-reveal style="--reveal-i:2">
+        <div class="ba-visual">
+          <div class="ba-side">
+            <span class="ba-side-label ba-before">Before</span>
+          </div>
+          <div class="ba-divider">
+            <div class="ba-divider-handle">
+              <svg viewBox="0 0 24 24"><path d="M8 12H3M16 12H21M8 12L11 9M8 12L11 15M16 12L13 9M16 12L13 15"/></svg>
+            </div>
+          </div>
+          <div class="ba-side">
+            <span class="ba-side-label ba-after">After</span>
+          </div>
+        </div>
+        <div class="ba-content">
+          <div class="ba-title">치아미백</div>
+          <div class="ba-desc">착색된 치아에서 전문 미백으로 밝고 환한 미소로</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Location ===== -->
+<section class="section location" id="location" aria-label="오시는 길">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="deco-line">
+        <span></span>
+        <svg viewBox="0 0 24 24"><path d="M12 2L9 7H3l5 4-2 7 6-4 6 4-2-7 5-4h-6z"/></svg>
+        <span></span>
+      </div>
+      <h2>오시는 길</h2>
+    </div>
+
+    <div class="location-grid">
+      <!-- Hours -->
+      <div class="hours-card" data-reveal>
+        <h3>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          진료시간 안내
+        </h3>
+        <table class="hours-table">
+          <tr>
+            <td>평일</td>
+            <td>09:30 - 18:30</td>
+          </tr>
+          <tr>
+            <td>토요일</td>
+            <td>09:30 - 14:00</td>
+          </tr>
+          <tr class="closed">
+            <td>일요일 / 공휴일</td>
+            <td>휴진</td>
+          </tr>
+          <tr>
+            <td>점심시간</td>
+            <td>13:00 - 14:00</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Location info -->
+      <div class="location-info-card" data-reveal>
+        <h3>
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          찾아오시는 길
+        </h3>
+
+        <div class="location-item">
+          <div class="location-item-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="location-item-text">
+            <strong>주소</strong>
+            서울특별시 서초구 반포대로 218, 5층
+          </div>
+        </div>
+
+        <div class="location-item">
+          <div class="location-item-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div class="location-item-text">
+            <strong>전화</strong>
+            <span class="phone-number">02-591-2080</span>
+          </div>
+        </div>
+
+        <div class="location-item">
+          <div class="location-item-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/><circle cx="7" cy="15" r="1.5"/></svg>
+          </div>
+          <div class="location-item-text">
+            <strong>지하철</strong>
+            9호선 신반포역 3번 출구 도보 3분
+          </div>
+        </div>
+
+        <div class="location-item">
+          <div class="location-item-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M6 11V7a2 2 0 012-2h8a2 2 0 012 2v4"/><circle cx="7.5" cy="15.5" r="1.5"/><circle cx="16.5" cy="15.5" r="1.5"/></svg>
+          </div>
+          <div class="location-item-text">
+            <strong>주차</strong>
+            건물 지하 주차장 이용 (2시간 무료)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <path d="M16 3c-2.5 0-4.5 0.8-6 2.2C8.5 6.6 7.5 8.5 7 11c-0.5 2.5-0.2 5 0.5 7.5 0.7 2.5 1.5 5 2.5 7 0.5 1 1.2 1.5 2 1.5s1.5-0.8 2-2.5c0.3-1 0.7-1.5 1-1.5h2c0.3 0 0.7 0.5 1 1.5 0.5 1.7 1.2 2.5 2 2.5s1.5-0.5 2-1.5c1-2 1.8-4.5 2.5-7 0.7-2.5 1-5 0.5-7.5-0.5-2.5-1.5-4.4-3-5.8C20.5 3.8 18.5 3 16 3z" fill="rgba(255,255,255,0.8)" opacity="0.9"/>
+          <path d="M13 10h6M16 7v6" stroke="var(--color-accent)" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        미래플러스치과
+      </div>
+      <div class="footer-info">
+        <span>미래플러스치과의원</span>
+        <span class="divider">|</span>
+        <span>대표원장: 정하늘</span>
+        <span class="divider">|</span>
+        <span>사업자등록번호: 214-91-XXXXX</span>
+        <span class="divider">|</span>
+        <span>서울특별시 서초구 반포대로 218, 5층</span>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 미래플러스치과. All rights reserved.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // === Navbar scroll effect (rAF-batched) ===
+  var nav = document.getElementById('nav');
+  var ticking = false;
+
+  function handleScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrollY > 40) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+
+  // === IntersectionObserver (unified: scroll reveal + stat counters) ===
+  var revealElements = document.querySelectorAll('[data-reveal]');
+  var statsObserved = false;
+  var statNumbers = document.querySelectorAll('.stat-number');
+  var statsContainer = document.querySelector('.about-stats');
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+
+        // Handle stat counter animation
+        if (entry.target === statsContainer && !statsObserved) {
+          statsObserved = true;
+          animateCounters();
+          observer.unobserve(entry.target);
+          return;
+        }
+
+        // Handle scroll reveal
+        if (entry.target.hasAttribute('data-reveal')) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(function(el) {
+      observer.observe(el);
+    });
+
+    if (statsContainer) {
+      observer.observe(statsContainer);
+    }
+  } else {
+    revealElements.forEach(function(el) {
+      el.classList.add('revealed');
+    });
+  }
+
+  // === Smooth scroll for anchor links ===
+  var anchorLinks = document.querySelectorAll('a[href^="#"]');
+  anchorLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      var target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        var navHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 72;
+        var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  function animateCounters() {
+    var data = [
+      { target: 12, suffix: '년', unit: true },
+      { target: 25000, suffix: '+', format: true },
+      { target: 5000, suffix: '+', format: true }
+    ];
+
+    statNumbers.forEach(function(el, i) {
+      var d = data[i];
+      if (!d) return;
+      var duration = 1600;
+      var startTime = null;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.floor(eased * d.target);
+
+        var displayVal = current;
+        if (d.format && current >= 1000) {
+          displayVal = current.toLocaleString();
+        }
+
+        el.innerHTML = displayVal + '<span class="stat-suffix">' + d.suffix + '</span>';
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+
+      requestAnimationFrame(step);
+    });
+  }
+
+})();
+</script>
+</body>
+</html>
